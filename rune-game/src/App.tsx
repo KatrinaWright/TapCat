@@ -4,11 +4,11 @@ import { PlayerId } from "rune-games-sdk/multiplayer"
 import selectSoundAudio from "./assets/select.wav"
 import { GameState } from "./logic.ts"
 
-const selectSound = new Audio(selectSoundAudio)
+const selectSound = new Audio(selectSoundAudio)                            // update: add purring sound and scratchng sound
 
 function App() {
-  const [game, setGame] = useState<GameState>()
-  const [yourPlayerId, setYourPlayerId] = useState<PlayerId | undefined>()
+  const [game, setGame] = useState<GameState>()                            // keep: general game state
+  const [yourPlayerId, setYourPlayerId] = useState<PlayerId | undefined>() // keep: general avatar access
 
   useEffect(() => {
     Rune.initClient({
@@ -16,9 +16,11 @@ function App() {
         setGame(game)
         setYourPlayerId(yourPlayerId)
 
-        if (action && action.name === "claimCell") selectSound.play()
+        if (action && action.name === "claimCell") selectSound.play()      // update: play sound with correct action - change to purring/scratching
+        // if (action && action.name === "goodPet") petSuccessSound.play() // Pseudo: play sound success
+        // elif (action && action.name === "badPet") petFailSound.play()   // Pseudo: play sound fail
       },
-    })
+    }) 
   }, [])
 
   if (!game) {
@@ -55,23 +57,23 @@ function App() {
           )
         })}
       </div>
-      <ul id="playersSection">
-        {playerIds.map((playerId, index) => {
-          const player = Rune.getPlayerInfo(playerId)
+      <ul id="playersSection">                                                      {/* keep player picture */}
+        {playerIds.map((playerId, index) => {                                      // {/* keep player picture */}
+          const player = Rune.getPlayerInfo(playerId)                              //{/* keep player picture */}
 
           return (
             <li
-              key={playerId}
-              data-player={index.toString()}
-              data-your-turn={String(
-                playerIds[index] !== lastMovePlayerId && !winCombo && freeCells
+              key={playerId}                                                        // Keep: player index discovery
+              data-player={index.toString()}                                        //  
+              data-your-turn={String(                                               // REMOVE : dont need player turns
+                playerIds[index] !== lastMovePlayerId && !winCombo && freeCells     // REMOVE: dont need player turns
               )}
             >
-              <img src={player.avatarUrl} />
+              <img src={player.avatarUrl} />                                        {/* keep player picture */}
               <span>
-                {player.displayName}
-                {player.playerId === yourPlayerId && (
-                  <span>
+                {player.displayName}                                                {/* keep player name */}
+                {player.playerId === yourPlayerId && (                              
+                  <span>                                                            {/* REMOVE you player indicator */}
                     <br />
                     (You)
                   </span>
