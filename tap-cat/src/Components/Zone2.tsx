@@ -1,11 +1,18 @@
 import React, { useState } from 'react';
 
+const zoneText = document.getElementById("highScore");
+const diceText = document.getElementById("score");
+// paragraph.textContent = "New text here";
+
 const PettingZones: React.FC = () => {
   const [activeZone, setActiveZone] = useState<string | null>(null);
 
   const handlePointerDown = (zone: string) => {
     console.log(`Pointer down in ${zone}`);
     setActiveZone(zone);
+    if (zoneText) {
+        zoneText.textContent="Zone: " + zone;
+    }
   };
 
   const handlePointerMove = (event: React.PointerEvent<HTMLElement>) => {
@@ -23,8 +30,12 @@ const PettingZones: React.FC = () => {
   };
 
   const rollDiceForZone = (zone: string) => {
-    const diceRoll = Math.floor(Math.random() * 6) + 1;
+    const diceRoll = Math.floor(Math.random() * 100) + 1;
     console.log(`Rolled a ${diceRoll} for ${zone}`);
+    // $('#score').text("diceRoll: " + diceRoll + " for " + zone);
+    if (diceText) {
+        diceText.textContent="diceRoll: " + diceRoll + " for " + zone;
+    }
   };
 
   return (
