@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client"
 
 import App from "./App.tsx"
 import "./styles.css"
-import PettingZones from "./Components/Zones.tsx"
+import PettingZones from "./Components/Zone2.tsx"
 import picture from "../src/assets/Cat using laptop.gif"
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
