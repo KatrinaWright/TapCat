@@ -39,7 +39,7 @@ function App() {
 <PettingZones/>
 
 
-      <div id="board" className={!lastMovePlayerId ? "initial" : ""}>
+      {/* <div id="board" className={!lastMovePlayerId ? "initial" : ""}>
         {cells.map((cell, cellIndex) => {
           const cellValue = cells[cellIndex]
 
@@ -63,7 +63,7 @@ function App() {
             />
           )
         })}
-      </div>
+      </div> */}
       <ul id="playersSection">
         {playerIds.map((playerId, index) => {
           const player = Rune.getPlayerInfo(playerId)
