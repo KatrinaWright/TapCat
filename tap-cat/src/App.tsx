@@ -72,9 +72,9 @@ function App() {
             <li
               key={playerId}
               data-player={index.toString()}
-              data-your-turn={String(
-                playerIds[index] !== lastMovePlayerId && !winCombo && freeCells
-              )}
+              // data-your-turn={String(
+              //   playerIds[index] !== lastMovePlayerId && !winCombo && freeCells
+              // )}
             >
               <img src={player.avatarUrl} />
               <span>

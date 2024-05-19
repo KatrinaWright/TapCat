@@ -189,9 +189,9 @@ li {
 }
 
 li img {
-  width: 20vw;
-  height: 20vw;
-  margin-top: 6.4vw;
+  width: 2vw;
+  height: 2vw;
+  margin-top: 2.4vw;
   margin-bottom: 2.1vw;
 }
 
@@ -203,8 +203,8 @@ li:before {
   content: "";
   display: inline-block;
   vertical-align: middle;
-  width: 13vw;
-  height: 13vw;
+  width: 5vw;
+  height: 5vw;
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
