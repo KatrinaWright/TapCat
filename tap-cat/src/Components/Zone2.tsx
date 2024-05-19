@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
 const PettingZones: React.FC = () => {
   const [activeZone, setActiveZone] = useState<string | null>(null);
@@ -11,10 +11,12 @@ const PettingZones: React.FC = () => {
     setZoneText(`Zone: ${zone}`);
   };
 
-  const handlePointerMove = (event: React.TouchEvent<HTMLElement>) => {
+  const handlePointerMove = useCallback((event: MouseEvent | TouchEvent) => {
     event.preventDefault(); // Prevent default touch behavior
-    const touch = event.touches[0];
-    const element = document.elementFromPoint(touch.clientX, touch.clientY);
+    const clientX = (event instanceof TouchEvent) ? event.touches[0].clientX : event.clientX;
+    const clientY = (event instanceof TouchEvent) ? event.touches[0].clientY : event.clientY;
+
+    const element = document.elementFromPoint(clientX, clientY);
     if (element && element.tagName === 'AREA') {
       const zone = (element as HTMLAreaElement).alt;
       if (activeZone !== zone) {
@@ -23,12 +25,12 @@ const PettingZones: React.FC = () => {
         setActiveZone(zone);
       }
     }
-  };
+  }, [activeZone]);
 
-  const handlePointerUp = () => {
+  const handlePointerUp = useCallback(() => {
     console.log('Pointer up');
     setActiveZone(null);
-  };
+  }, []);
 
   const rollDiceForZone = (zone: string) => {
     const diceRoll = Math.floor(Math.random() * 100) + 1;
@@ -37,22 +39,24 @@ const PettingZones: React.FC = () => {
   };
 
   useEffect(() => {
-    const handleTouchMove = (event: TouchEvent) => {
-      handlePointerMove(event as unknown as React.TouchEvent<HTMLElement>);
-    };
+    const handleMouseMove = (event: MouseEvent) => handlePointerMove(event);
+    const handleTouchMove = (event: TouchEvent) => handlePointerMove(event);
 
-    const handleTouchEnd = () => {
-      handlePointerUp();
-    };
+    const handleMouseUp = () => handlePointerUp();
+    const handleTouchEnd = () => handlePointerUp();
 
+    document.addEventListener('mousemove', handleMouseMove);
     document.addEventListener('touchmove', handleTouchMove);
+    document.addEventListener('mouseup', handleMouseUp);
     document.addEventListener('touchend', handleTouchEnd);
 
     return () => {
+      document.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('touchmove', handleTouchMove);
+      document.removeEventListener('mouseup', handleMouseUp);
       document.removeEventListener('touchend', handleTouchEnd);
     };
-  }, [activeZone]);
+  }, [handlePointerMove, handlePointerUp]);
 
   return (
     <div>
@@ -60,7 +64,7 @@ const PettingZones: React.FC = () => {
       <div id="diceText">{diceText}</div>
       <map
         name="image-map"
-        onPointerDown={handlePointerDown as any}
+        onPointerDown={(e: React.PointerEvent<HTMLElement>) => handlePointerDown((e.target as HTMLAreaElement).alt)}
       >
         <area
           target="_blank"
