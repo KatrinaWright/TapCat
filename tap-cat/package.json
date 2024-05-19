@@ -16,6 +16,7 @@
     "rune-games-sdk": "^4.19.9"
   },
   "devDependencies": {
+    "@types/jquery": "^3.5.30",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
     "@typescript-eslint/eslint-plugin": "^7.8.0",
