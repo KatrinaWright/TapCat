@@ -12,7 +12,7 @@ const PettingZones: React.FC = () => {
     setActiveZone(zone);
     if (zoneText) {
         zoneText.textContent="Zone: " + zone;
-    }
+    } else {console.log("No zoneText")}
   };
 
   const handlePointerMove = (event: React.PointerEvent<HTMLElement>) => {
