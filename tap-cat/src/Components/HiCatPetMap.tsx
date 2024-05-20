@@ -65,7 +65,7 @@ const PettingZones: React.FC = () => {
         <map
             name="image-map"
             onPointerDown={(e: React.PointerEvent<HTMLElement>) => handlePointerDown((e.target as HTMLAreaElement).alt)}>
-                
+
             <area
             alt="Mouth"
             title="Mouth"
@@ -721,3 +721,13 @@ const PettingZones: React.FC = () => {
 };
 
 export default PettingZones;
+
+// Suggestion for moving data out of the component to make a reusable component for each cat picture
+// mapFile.json
+// [
+// {
+// title: “Leg”,
+// rating: 300,
+// coords: "225,235,182,263,194,275,223,270”,
+// shape: “poly”
+// },{
