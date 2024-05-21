@@ -5,10 +5,12 @@ import "./styles.css"
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <img src="src/assets/Cute Cat Eating Fish.gif" useMap="#image-map"></img>
+    <img src="src/assets/Cute Cat Eating Fish.gif" useMap="#image-map" ></img>
 
 <map name="image-map">
-    <area target="_blank" alt="Face" title="Face" href="facebook.com" coords="594,446,255" shape="circle"></area>
+    <area target="_blank" alt="Face" title="Face" coords="594,446,255" shape="circle">
+      {/* <button onClick={console.log("Face Button")}></button> */}
+    </area>
     <area target="_blank" alt="backFootLeft" title="backFootLeft" href="github.com" coords="785,933,932,1020" shape="rect"></area>
     <area target="_blank" alt="backFootRight" title="backFootRight" href="paypal.com" coords="261,933,397,1018" shape="rect"></area>
     <area target="_blank" alt="foodBowl" title="foodBowl" href="doordash.com" coords="416,1079,442,981,453,952,472,942,495,934,505,929,513,905,540,896,566,899,591,908,602,922,632,923,665,930,694,935,723,947,736,961,747,975,753,988,756,1008,760,1029,764,1046,770,1069,772,1080,752,1094,672,1122,566,1127,450,1106,423,1093" shape="poly"></area>
