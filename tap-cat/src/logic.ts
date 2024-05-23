@@ -5,16 +5,19 @@ export interface GameState {
   score: number,
   scratched: boolean,
   lastMovePlayerId: PlayerId | null,
-  playerIds: PlayerId[]
+  playerIds: PlayerId[],
+  increment: number,
+  count: number
 }
 
 type GameActions = {
-  earnPoint: (rollResult: number) => void;
-  getScratched: (rollResult: number) => void;
-  updateScore: (params: {
-    PlayerId: string | undefined,
-    amount: number
-  }) => void,
+//   earnPoint: (rollResult: number) => void;
+//   getScratched: (rollResult: number) => void;
+//   updateScore: (params: {
+//     PlayerId: string | undefined,
+//     amount: number
+//   }) => void;
+  increment: (params: {amount: number}) => void;
 }
 
 declare global {
@@ -30,23 +33,29 @@ Rune.initLogic({
     scratched: false,
     lastMovePlayerId: null,
     playerIds: allPlayerIds,
+    increment: 0,
+    count: 0
   }),
   actions: {
+    increment: ({ amount }, { game }) => {
+        game.count += amount
+      },
 
 
-    updateScore: ({PlayerId, amount}, {game}) => {
+    // updateScore: ({PlayerId, amount}, {game}) => {
 
-    if (PlayerId === undefined) {
-        PlayerId = "spectator"
-    }
+    // if (PlayerId === undefined) {
+    //     PlayerId = "spectator"
+    // }
 
-    else
-    if (game.score[PlayerId] === undefined) {
-        throw Rune.invalidAction();
-    }
+    // else
+    // if (game.score[PlayerId] === undefined) {
+    //     throw Rune.invalidAction();
+    // }
 
-    game.score[PlayerId] += amount;
-    }
+    // game.score[PlayerId] += amount;
+    // }
+    
     // earnPoint: (rollDice, { game, playerId, allPlayerIds }) => {
     //   if (
     //     game.scratched !== false 
