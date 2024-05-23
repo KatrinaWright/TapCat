@@ -32,9 +32,9 @@ Rune.initLogic({
       game.count += amount;
     },
     updateScore: ({ playerId, amount }, { game }) => {
-    //   if (!game.playerIds.includes(playerId)) {
-    //     throw Rune.invalidAction();
-    //   }
+      if (!game.playerIds.includes(playerId)) {
+        throw Rune.invalidAction();
+      }
 
       if (game.scores[playerId] === undefined) {
         game.scores[playerId] = 0;
