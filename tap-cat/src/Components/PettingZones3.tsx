@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 
 // Define the structure of the JSON data
 interface AreaData {
@@ -12,13 +12,15 @@ interface PettingZonesProps {
   imageName: string;
   mapData: AreaData[];
   playerId: string;
+  scores: { [key: string]: number };
 }
 
-const PettingZones: React.FC<PettingZonesProps> = ({ imageName, mapData, playerId }) => {
+const PettingZones: React.FC<PettingZonesProps> = ({ imageName, mapData, playerId, scores }) => {
   const [activeZone, setActiveZone] = useState<string | null>(null);
   const [zoneText, setZoneText] = useState<string>('');
   const [diceText, setDiceText] = useState<string>('');
-  const [playerScores, setPlayerScores] = useState<{ [key: string]: number }>({});
+  const actionQueue = useRef<{ playerId: string; amount: number }[]>([]);
+  const lastActionTime = useRef<number>(0);
 
   const handlePointerDown = (zone: string) => {
     console.log(`Pointer down in ${zone}`);
@@ -52,13 +54,15 @@ const PettingZones: React.FC<PettingZonesProps> = ({ imageName, mapData, playerI
     const diceRoll = Math.floor(Math.random() * 100) + 1;
     console.log(`Rolled a ${diceRoll} for ${zoneObject.title}`);
 
+    let amount;
     if (diceRoll === 1) {
-      Rune.actions.updateScore({ playerId, amount: -1000 });
+      amount = -1000;
     } else {
-      Rune.actions.updateScore({ playerId, amount: 100 / zoneObject.rating });
+      amount = 100 / zoneObject.rating;
     }
 
-    setDiceText(`diceRoll: ${diceRoll} for ${zoneObject.title}`);
+    // Add the action to the queue
+    actionQueue.current.push({ playerId, amount });
   };
 
   useEffect(() => {
@@ -81,18 +85,21 @@ const PettingZones: React.FC<PettingZonesProps> = ({ imageName, mapData, playerI
     };
   }, [handlePointerMove, handlePointerUp]);
 
-  // Debugging player scores
+  useEffect(() => {
+    const processQueue = () => {
+      const now = Date.now();
+      if (actionQueue.current.length > 0 && now - lastActionTime.current > 100) {
+        const action = actionQueue.current.shift();
+        if (action) {
+          Rune.actions.updateScore(action);
+          lastActionTime.current = now;
+        }
+      }
+      requestAnimationFrame(processQueue);
+    };
 
-    // const handleStateChange = ({ game }: { game: GameState }) => {
-    //   setPlayerScores(game.scores);
-    // };
-
-//     Rune.onChange(handleStateChange);
-
-//     return () => {
-//       Rune.offChange(handleStateChange);
-//     };
-//   }, []);
+    processQueue();
+  }, []);
 
   return (
     <div>
@@ -119,9 +126,9 @@ const PettingZones: React.FC<PettingZonesProps> = ({ imageName, mapData, playerI
       {/* Debugging player scores */}
       <div id="debugging-player-scores">
         <h3>Debugging Player Scores</h3>
-        {Object.keys(playerScores).map(playerId => (
+        {Object.keys(scores).map(playerId => (
           <div key={playerId}>
-            {playerId}: {playerScores[playerId]}
+            {playerId}: {scores[playerId]}
           </div>
         ))}
       </div>
