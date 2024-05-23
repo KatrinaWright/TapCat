@@ -86,10 +86,14 @@ const PettingZones: React.FC<PettingZonesProps> = ({ imageName, mapData }) => {
             title={area.title}
             onPointerDown={() => handlePointerDown(area.title)}
             onTouchStart={() => handlePointerDown(area.title)}
-            onClick={() => console.log(area.rating)}
+            // onClick={() => console.log(area.rating)}
+            onClick={() => Rune.actions.increment({ amount: 100 / area.rating })}
             coords={area.coords}
             shape={area.shape}
           />
+        //   <button onClick={() => Rune.actions.increment({ amount: 1 })}>
+        //   count is {game.count}
+        // </button> 
         ))}
       </map>
     </div>
