@@ -3,7 +3,7 @@ import { PlayerId } from "rune-games-sdk/multiplayer"
 
 import selectSoundAudio from "./assets/select.wav"
 import { GameState } from "./logic.ts"
-import PettingZones from "./Components/PettingZones.tsx"
+import PettingZones from "./Components/PettingZones3.tsx"
 //import PettingZones from "./Components/HiCatPetMap.tsx"
 //// import PettingZones from "./Components/Zone2.tsx"
 //// import picture from "../src/assets/Cat using laptop.gif"

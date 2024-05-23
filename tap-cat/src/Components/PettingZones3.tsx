@@ -11,12 +11,14 @@ interface AreaData {
 interface PettingZonesProps {
   imageName: string;
   mapData: AreaData[];
+  playerId: string;
 }
 
-const PettingZones: React.FC<PettingZonesProps> = ({ imageName, mapData }) => {
+const PettingZones: React.FC<PettingZonesProps> = ({ imageName, mapData, playerId }) => {
   const [activeZone, setActiveZone] = useState<string | null>(null);
   const [zoneText, setZoneText] = useState<string>('');
   const [diceText, setDiceText] = useState<string>('');
+  const [playerScores, setPlayerScores] = useState<{ [key: string]: number }>({});
 
   const handlePointerDown = (zone: string) => {
     console.log(`Pointer down in ${zone}`);
@@ -32,27 +34,31 @@ const PettingZones: React.FC<PettingZonesProps> = ({ imageName, mapData }) => {
     const element = document.elementFromPoint(clientX, clientY);
     if (element && element.tagName === 'AREA') {
       const zone = (element as HTMLAreaElement).alt;
-      const zoneObject = element.AreaData
-      if (activeZone !== zone) {
+      const zoneObject = mapData.find(area => area.title === zone);
+      if (zoneObject && activeZone !== zone) {
         console.log(`Pointer moved to ${zone}`);
-        rollDiceForZone(zone, zoneObject);
+        rollDiceForZone(zoneObject);
         setActiveZone(zone);
       }
     }
-  }, [activeZone]);
+  }, [activeZone, mapData]);
 
   const handlePointerUp = useCallback(() => {
     console.log('Pointer up');
     setActiveZone(null);
   }, []);
 
-  const rollDiceForZone = (zone: string, zoneObject: Element) => {
+  const rollDiceForZone = (zoneObject: AreaData) => {
     const diceRoll = Math.floor(Math.random() * 100) + 1;
-    Rune.actions.increment({ amount: 100 / zoneObject.rating })
+    console.log(`Rolled a ${diceRoll} for ${zoneObject.title}`);
 
+    if (diceRoll === 1) {
+      Rune.actions.updateScore({ playerId, amount: -1000 });
+    } else {
+      Rune.actions.updateScore({ playerId, amount: 100 / zoneObject.rating });
+    }
 
-    console.log(`Rolled a ${diceRoll} for ${zone}`);
-    setDiceText(`diceRoll: ${diceRoll} for ${zone}`);
+    setDiceText(`diceRoll: ${diceRoll} for ${zoneObject.title}`);
   };
 
   useEffect(() => {
@@ -75,6 +81,19 @@ const PettingZones: React.FC<PettingZonesProps> = ({ imageName, mapData }) => {
     };
   }, [handlePointerMove, handlePointerUp]);
 
+  // Debugging player scores
+
+    // const handleStateChange = ({ game }: { game: GameState }) => {
+    //   setPlayerScores(game.scores);
+    // };
+
+//     Rune.onChange(handleStateChange);
+
+//     return () => {
+//       Rune.offChange(handleStateChange);
+//     };
+//   }, []);
+
   return (
     <div>
       <div id="zoneText">{zoneText}</div>
@@ -90,16 +109,22 @@ const PettingZones: React.FC<PettingZonesProps> = ({ imageName, mapData }) => {
             title={area.title}
             onPointerDown={() => handlePointerDown(area.title)}
             onTouchStart={() => handlePointerDown(area.title)}
-            // onClick={() => console.log(area.rating)}
-            onClick={() => Rune.actions.increment({ amount: 100 / area.rating })}
+            onClick={() => rollDiceForZone(area)}
             coords={area.coords}
             shape={area.shape}
           />
-        //   <button onClick={() => Rune.actions.increment({ amount: 1 })}>
-        //   count is {game.count}
-        // </button> 
         ))}
       </map>
+
+      {/* Debugging player scores */}
+      <div id="debugging-player-scores">
+        <h3>Debugging Player Scores</h3>
+        {Object.keys(playerScores).map(playerId => (
+          <div key={playerId}>
+            {playerId}: {playerScores[playerId]}
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
