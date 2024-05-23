@@ -51,14 +51,14 @@ const PettingZones: React.FC<PettingZonesProps> = ({ imageName, mapData, playerI
   }, []);
 
   const rollDiceForZone = (zoneObject: AreaData) => {
-    const diceRoll = Math.floor(Math.random() * 100) + 1;
-    console.log(`Rolled a ${diceRoll} for ${zoneObject.title}`);
+    const diceRoll = Math.floor(Math.random() * zoneObject.rating) + 1;
+    console.log(`Rolled a ${diceRoll} out of ${zoneObject.rating} for ${zoneObject.title}`);
 
     let amount;
     if (diceRoll === 1) {
       amount = -1000;
     } else {
-      amount = 100 / zoneObject.rating;
+      amount =  Math.ceil(100 / zoneObject.rating);
     }
 
     // Add the action to the queue
