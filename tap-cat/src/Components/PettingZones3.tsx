@@ -13,12 +13,13 @@ interface PettingZonesProps {
   mapData: AreaData[];
   playerId: string;
   scores: { [key: string]: number };
+  scratches: { [key: string]: number};
 }
 
-const PettingZones: React.FC<PettingZonesProps> = ({ imageName, mapData, playerId, scores }) => {
+const PettingZones: React.FC<PettingZonesProps> = ({ imageName, mapData, playerId, scores, scratches}) => {
   const [activeZone, setActiveZone] = useState<string | null>(null);
   const [zoneText, setZoneText] = useState<string>('');
-  const [diceText, setDiceText] = useState<string>('');
+  //const [diceText, setDiceText] = useState<string>('');
   const actionQueue = useRef<{ playerId: string; amount: number }[]>([]);
   const lastActionTime = useRef<number>(0);
 
@@ -57,6 +58,9 @@ const PettingZones: React.FC<PettingZonesProps> = ({ imageName, mapData, playerI
     let amount;
     if (diceRoll === 1) {
       amount = -1000;
+      Rune.actions.increment({ amount: 1 });
+      Rune.actions.updateScratch({playerId: playerId, amount: 1});
+      console.log( 'Player got scratched! ${playerId} ');
     } else {
       amount =  Math.ceil(100 / zoneObject.rating);
     }
@@ -104,7 +108,7 @@ const PettingZones: React.FC<PettingZonesProps> = ({ imageName, mapData, playerI
   return (
     <div>
       <div id="zoneText">{zoneText}</div>
-      <div id="diceText">{diceText}</div>
+      {/* //<div id="diceText">{diceText}</div> */}
       <map
         name={imageName}
         onPointerDown={(e: React.PointerEvent<HTMLElement>) => handlePointerDown((e.target as HTMLAreaElement).alt)}

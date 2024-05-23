@@ -29,7 +29,7 @@ function App() {
     return null
   }
 
-  const { playerIds, scores } = game
+  const { playerIds, scores, scratches } = game
 
   return (
     <>
@@ -40,6 +40,7 @@ function App() {
           mapData={mapData}
           playerId={yourPlayerId}
           scores={scores}
+          scratches={scratches}
         />
       )}
 
