@@ -52,7 +52,11 @@ function App() {
             <li key={playerId} data-player={index.toString()}>
               <img src={player.avatarUrl} alt={`${player.displayName}'s avatar`} />
               <span>
+                {scores[playerId]}
+                <br />
                 {player.displayName}
+                <br />
+                {scratches[playerId]}
                 {player.playerId === yourPlayerId && (
                   <span>
                     <br />
