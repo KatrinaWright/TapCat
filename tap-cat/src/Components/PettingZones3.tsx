@@ -131,9 +131,14 @@ const PettingZones: React.FC<PettingZonesProps> = ({ imageName, mapData, playerI
       <div id="debugging-player-scores">
         <h3>Debugging Player Scores</h3>
         {Object.keys(scores).map(playerId => (
+          <>
           <div key={playerId}>
             {playerId}: {scores[playerId]}
           </div>
+          <div key={playerId}>
+          {playerId}: {scratches[playerId]}
+        </div>
+        </>
         ))}
       </div>
     </div>
