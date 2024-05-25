@@ -3,7 +3,7 @@ import { PlayerId } from "rune-games-sdk/multiplayer"
 
 import selectSoundAudio from "./assets/select.wav"
 import { GameState } from "./logic.ts"
-import PettingZones from "./Components/PettingZones3.tsx"
+import PettingZones from "./Components/PettingZones.tsx"
 import picture from "../src/assets/Cat Saying Hello.gif"
 import mapData from './mapData.json';
 
@@ -19,7 +19,7 @@ function App() {
         setGame(game)
         setYourPlayerId(yourPlayerId)
 
-        if (action && action.name === "increment") selectSound.play()
+        if (action && action.name === "updateScratch") selectSound.play()
       },
     })
   }, [])
@@ -39,8 +39,8 @@ function App() {
           imageName="image-map"
           mapData={mapData}
           playerId={yourPlayerId}
-          scores={scores}
-          scratches={scratches}
+          // scores={scores}
+          // scratches={scratches}
         />
       )}
 
