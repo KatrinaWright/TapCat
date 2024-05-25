@@ -16,14 +16,12 @@ interface PettingZonesProps {
 
 const PettingZones: React.FC<PettingZonesProps> = ({ imageName, mapData, playerId }) => {
   const [activeZone, setActiveZone] = useState<string | null>(null);
-  const [zoneText, setZoneText] = useState<string>('');
   const actionQueue = useRef<{ playerId: string; amount: number }[]>([]);
   const lastActionTime = useRef<number>(0);
 
   const handlePointerDown = (zone: string) => {
     console.log(`Pointer down in ${zone}`);
     setActiveZone(zone);
-    setZoneText(`Zone: ${zone}`);
   };
 
   const handlePointerMove = useCallback((event: MouseEvent | TouchEvent) => {
