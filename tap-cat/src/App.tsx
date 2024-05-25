@@ -29,7 +29,7 @@ function App() {
     return null
   }
 
-  const { playerIds, scores, scratches } = game
+  const { playerIds, scratches} = game
 
   return (
     <>
@@ -39,8 +39,6 @@ function App() {
           imageName="image-map"
           mapData={mapData}
           playerId={yourPlayerId}
-          // scores={scores}
-          // scratches={scratches}
         />
       )}
 
@@ -52,7 +50,7 @@ function App() {
             <li key={playerId} data-player={index.toString()}>
               <img src={player.avatarUrl} alt={`${player.displayName}'s avatar`} />
               <span>
-                {scores[playerId]}
+                {game.scores[playerId]}
                 <br />
                 {player.displayName}
                 <br />

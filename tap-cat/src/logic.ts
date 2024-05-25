@@ -58,10 +58,4 @@ Rune.initLogic({
   }
 }
 }
-// },
-//   update: ({ game, allPlayerIds }) => {
-//     // This function will be called 10 times per second (based on updatesPerSecond setting)
-//     // You can use this to perform regular updates, like decrementing a timer or checking game conditions
-//   },
-//   updatesPerSecond: 10
 );
