@@ -14,10 +14,27 @@ interface PettingZonesProps {
   playerId: string;
 }
 
-const PettingZones: React.FC<PettingZonesProps> = ({ imageName, mapData, playerId }) => {
+const PettingZones: React.FC<PettingZonesProps> = ({ imageName, mapData, playerId}) => {
   const [activeZone, setActiveZone] = useState<string | null>(null);
   const actionQueue = useRef<{ playerId: string; amount: number }[]>([]);
   const lastActionTime = useRef<number>(0);
+
+  const rollDiceForZone = useCallback((zoneObject: AreaData) => {
+    const diceRoll = Math.floor(Math.random() * zoneObject.rating) + 1;
+    console.log(`Rolled a ${diceRoll} out of ${zoneObject.rating} for ${zoneObject.title}`);
+
+    let amount;
+    if (diceRoll === 1) {
+      amount = -100;
+      Rune.actions.updateScratch({ playerId, amount: 1 });
+      console.log(`Player got scratched! ${playerId}`);
+    } else {
+      amount = Math.ceil(100 / zoneObject.rating);
+    }
+
+    // Add the action to the queue
+    actionQueue.current.push({ playerId, amount });
+  }, [playerId]);
 
   const handlePointerDown = (zone: string) => {
     console.log(`Pointer down in ${zone}`);
@@ -39,30 +56,12 @@ const PettingZones: React.FC<PettingZonesProps> = ({ imageName, mapData, playerI
         setActiveZone(zone);
       }
     }
-  }, [activeZone, mapData]);
+  }, [activeZone, mapData, rollDiceForZone]);
 
   const handlePointerUp = useCallback(() => {
     console.log('Pointer up');
     setActiveZone(null);
   }, []);
-
-  const rollDiceForZone = (zoneObject: AreaData) => {
-    const diceRoll = Math.floor(Math.random() * zoneObject.rating) + 1;
-    console.log(`Rolled a ${diceRoll} out of ${zoneObject.rating} for ${zoneObject.title}`);
-
-    let amount;
-    if (diceRoll === 1) {
-      amount = -100;
-    //   Rune.actions.increment({ amount: 1 });
-      Rune.actions.updateScratch({ playerId, amount: 1 });
-      console.log(`Player got scratched! ${playerId}`);
-    } else {
-      amount = Math.ceil(100 / zoneObject.rating);
-    }
-
-    // Add the action to the queue
-    actionQueue.current.push({ playerId, amount });
-  };
 
   useEffect(() => {
     const handleMouseMove = (event: MouseEvent) => handlePointerMove(event);
