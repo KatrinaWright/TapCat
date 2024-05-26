@@ -12,9 +12,10 @@ interface PettingZonesProps {
   imageName: string;
   mapData: AreaData[];
   playerId: string;
+  catHappiness: number;
 }
 
-const PettingZones: React.FC<PettingZonesProps> = ({ imageName, mapData, playerId}) => {
+const PettingZones: React.FC<PettingZonesProps> = ({ imageName, mapData, playerId, catHappiness }) => {
   const [activeZone, setActiveZone] = useState<string | null>(null);
   const actionQueue = useRef<{ playerId: string; amount: number }[]>([]);
   const lastActionTime = useRef<number>(0);
@@ -36,10 +37,10 @@ const PettingZones: React.FC<PettingZonesProps> = ({ imageName, mapData, playerI
     actionQueue.current.push({ playerId, amount });
   }, [playerId]);
 
-  const handlePointerDown = (zone: string) => {
+  const handlePointerDown = useCallback((zone: string) => {
     console.log(`Pointer down in ${zone}`);
     setActiveZone(zone);
-  };
+  }, []);
 
   const handlePointerMove = useCallback((event: MouseEvent | TouchEvent) => {
     event.preventDefault(); // Prevent default touch behavior
@@ -107,9 +108,33 @@ const PettingZones: React.FC<PettingZonesProps> = ({ imageName, mapData, playerI
 
   return (
     <div>
+      <div id="catHappiness">
+        Cat Happiness: {Math.round((catHappiness / 2000) * 100)}%
+        <div
+          style={{
+            width: '100%',
+            height: '20px',
+            backgroundColor: '#ddd',
+            marginTop: '10px',
+            position: 'relative'
+          }}
+        >
+          <div
+            style={{
+              width: `${(catHappiness / 2000) * 100}%`,
+              height: '100%',
+              backgroundColor: catHappiness >= 1000 ? 'green' : 'red',
+              position: 'absolute',
+              top: 0,
+              left: 0
+            }}
+          ></div>
+        </div>
+      </div>
       <map
         name={imageName}
         onPointerDown={(e: React.PointerEvent<HTMLElement>) => handlePointerDown((e.target as HTMLAreaElement).alt)}
+        style={{cursor : 'grabing'}}
       >
         {mapData.map((area, index) => (
           <area
@@ -121,6 +146,7 @@ const PettingZones: React.FC<PettingZonesProps> = ({ imageName, mapData, playerI
             onClick={() => rollDiceForZone(area)}
             coords={area.coords}
             shape={area.shape}
+            style={{cursor : 'grab'}}
           />
         ))}
       </map>

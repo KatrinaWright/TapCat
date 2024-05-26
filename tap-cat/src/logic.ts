@@ -5,8 +5,9 @@ export interface GameState {
   scratched: boolean,
   lastMovePlayerId: PlayerId | null,
   playerIds: PlayerId[],
-  count: number
-  scratches: { [key: string]: number};
+  count: number,
+  scratches: { [key: string]: number },
+  catHappiness: number,
 }
 
 type GameActions = {
@@ -19,16 +20,22 @@ declare global {
   const Rune: RuneClient<GameState, GameActions>
 }
 
+const isGameOver = (game: GameState): boolean => {
+  // Game over if catHappiness reaches 2000 or drops to 0
+  return game.catHappiness >= 2000 || game.catHappiness <= 0;
+}
+
 Rune.initLogic({
   minPlayers: 1,
-  maxPlayers: 2,
+  maxPlayers: 5,
   setup: (allPlayerIds) => ({
     scores: Object.fromEntries(allPlayerIds.map(id => [id, 0])),
     scratched: false,
     lastMovePlayerId: null,
     playerIds: allPlayerIds,
     count: 0,
-    scratches:  Object.fromEntries(allPlayerIds.map(id => [id, 0])),
+    scratches: Object.fromEntries(allPlayerIds.map(id => [id, 0])),
+    catHappiness: 50,
   }),
   actions: {
     increment: ({ amount }, { game }) => {
@@ -44,18 +51,41 @@ Rune.initLogic({
       }
 
       game.scores[playerId] += amount;
+      game.catHappiness += amount; // Increase cat happiness with score updates
+
+      if (isGameOver(game)) {
+        Rune.gameOver({
+          players: Object.fromEntries(game.playerIds.map(id => [id, game.scores[id]]))
+        });
+      }
     },
-  updateScratch: ({ playerId, amount }, { game }) => {
-    if (!game.playerIds.includes(playerId)) {
-      throw Rune.invalidAction();
-    }
+    updateScratch: ({ playerId, amount }, { game }) => {
+      if (!game.playerIds.includes(playerId)) {
+        throw Rune.invalidAction();
+      }
 
-    if (game.scratches[playerId] === undefined) {
-      game.scratches[playerId] = 0;
-    }
+      if (game.scratches[playerId] === undefined) {
+        game.scratches[playerId] = 0;
+      }
 
-    game.scratches[playerId] += amount;
-  }
-}
-}
-);
+      game.scratches[playerId] += amount;
+      game.catHappiness -= amount * 50; // Decrease cat happiness with scratches
+
+      if (isGameOver(game)) {
+        Rune.gameOver({
+          players: Object.fromEntries(game.playerIds.map(id => [id, game.scores[id]]))
+        });
+      }
+    }
+  },
+  update: ({ game }) => {
+    game.catHappiness -= 1; // Decrease cat happiness every second
+
+    if (isGameOver(game)) {
+      Rune.gameOver({
+        players: Object.fromEntries(game.playerIds.map(id => [id, game.scores[id]]))
+      });
+    }
+  },
+  updatesPerSecond: 1
+});

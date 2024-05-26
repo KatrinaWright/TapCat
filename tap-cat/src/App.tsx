@@ -29,16 +29,17 @@ function App() {
     return null
   }
 
-  const { playerIds, scratches} = game
+  const { playerIds, scratches, catHappiness} = game
 
   return (
     <>
-      <img src={picture} useMap="#image-map" alt="Petting Zones Map" />
+      <img src={picture} useMap="#image-map" alt="Petting Zones Map" style={{cursor : 'grab'}}/>
       {yourPlayerId && (
         <PettingZones
           imageName="image-map"
           mapData={mapData}
           playerId={yourPlayerId}
+          catHappiness={catHappiness}
         />
       )}
 
