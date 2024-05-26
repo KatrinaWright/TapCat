@@ -12,10 +12,9 @@ interface PettingZonesProps {
   imageName: string;
   mapData: AreaData[];
   playerId: string;
-  catHappiness: number;
 }
 
-const PettingZones: React.FC<PettingZonesProps> = ({ imageName, mapData, playerId, catHappiness }) => {
+const PettingZones: React.FC<PettingZonesProps> = ({ imageName, mapData, playerId }) => {
   const [activeZone, setActiveZone] = useState<string | null>(null);
   const actionQueue = useRef<{ playerId: string; amount: number }[]>([]);
   const lastActionTime = useRef<number>(0);
@@ -29,6 +28,7 @@ const PettingZones: React.FC<PettingZonesProps> = ({ imageName, mapData, playerI
       amount = -100;
       Rune.actions.updateScratch({ playerId, amount: 1 });
       console.log(`Player got scratched! ${playerId}`);
+
     } else {
       amount = Math.ceil(100 / zoneObject.rating);
     }
@@ -108,33 +108,10 @@ const PettingZones: React.FC<PettingZonesProps> = ({ imageName, mapData, playerI
 
   return (
     <div>
-      <div id="catHappiness">
-        Cat Happiness: {Math.round((catHappiness / 2000) * 100)}%
-        <div
-          style={{
-            width: '100%',
-            height: '20px',
-            backgroundColor: '#ddd',
-            marginTop: '10px',
-            position: 'relative'
-          }}
-        >
-          <div
-            style={{
-              width: `${(catHappiness / 2000) * 100}%`,
-              height: '100%',
-              backgroundColor: catHappiness >= 1000 ? 'green' : 'red',
-              position: 'absolute',
-              top: 0,
-              left: 0
-            }}
-          ></div>
-        </div>
-      </div>
       <map
         name={imageName}
         onPointerDown={(e: React.PointerEvent<HTMLElement>) => handlePointerDown((e.target as HTMLAreaElement).alt)}
-        style={{cursor : 'grabing'}}
+        style={{ cursor: playerId ? 'grabbing' : 'default' }}
       >
         {mapData.map((area, index) => (
           <area
@@ -146,7 +123,7 @@ const PettingZones: React.FC<PettingZonesProps> = ({ imageName, mapData, playerI
             onClick={() => rollDiceForZone(area)}
             coords={area.coords}
             shape={area.shape}
-            style={{cursor : 'grab'}}
+            style={{ cursor: 'grab' }}
           />
         ))}
       </map>

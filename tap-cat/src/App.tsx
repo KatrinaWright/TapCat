@@ -4,6 +4,7 @@ import { PlayerId } from "rune-games-sdk/multiplayer"
 import selectSoundAudio from "./assets/select.wav"
 import { GameState } from "./logic.ts"
 import PettingZones from "./Components/PettingZones.tsx"
+import CatHappinessBar from "./Components/CatHappinessBar.tsx"
 import picture from "../src/assets/Cat Saying Hello.gif"
 import mapData from './mapData.json';
 
@@ -29,17 +30,17 @@ function App() {
     return null
   }
 
-  const { playerIds, scratches, catHappiness} = game
+  const { playerIds, scratches, catHappiness } = game
 
   return (
     <>
-      <img src={picture} useMap="#image-map" alt="Petting Zones Map" style={{cursor : 'grab'}}/>
+      <CatHappinessBar catHappiness={catHappiness} />
+      <img src={picture} useMap="#image-map" alt="Petting Zones Map" style={{ cursor: yourPlayerId ? 'grab' : 'default' }} />
       {yourPlayerId && (
         <PettingZones
           imageName="image-map"
           mapData={mapData}
           playerId={yourPlayerId}
-          catHappiness={catHappiness}
         />
       )}
 
