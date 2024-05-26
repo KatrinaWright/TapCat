@@ -1,32 +1,23 @@
 import React from 'react';
+import './CatHappinessBar.css';
 
 interface CatHappinessBarProps {
   catHappiness: number;
 }
 
 const CatHappinessBar: React.FC<CatHappinessBarProps> = ({ catHappiness }) => {
+  const happinessPercentage = Math.round((catHappiness / 2000) * 100);
+
   return (
-    <div id="catHappiness">
-      Cat Happiness: {Math.round((catHappiness / 2000) * 100)}%
-      <div
-        style={{
-          width: '100%',
-          height: '20px',
-          backgroundColor: '#ddd',
-          marginTop: '10px',
-          position: 'relative'
-        }}
-      >
+    <div className="cat-happiness-container">
+      <div className="cat-happiness-bar">
         <div
-          style={{
-            width: `${(catHappiness / 2000) * 100}%`,
-            height: '100%',
-            backgroundColor: catHappiness >= 1000 ? 'green' : 'red',
-            position: 'absolute',
-            top: 0,
-            left: 0
-          }}
-        ></div>
+          className="cat-happiness-fill"
+          style={{ width: `${happinessPercentage}%` }}
+        />
+      </div>
+      <div className="cat-happiness-text">
+        Cat Happiness: {happinessPercentage}%
       </div>
     </div>
   );

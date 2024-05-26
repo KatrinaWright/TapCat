@@ -17,6 +17,11 @@
     color: #e6e6e6;
   }
   
+  .current-player {
+    background-color: #555;
+    border: 2px solid #ffa500;
+  }
+  
   .player-info {
     display: flex;
     align-items: center;
@@ -48,6 +53,6 @@
   .icon {
     width: 24px;
     height: 24px;
-    margin-right: 5px;
+    margin-left: 5px;
   }
   
