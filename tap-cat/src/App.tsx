@@ -7,6 +7,7 @@ import PettingZones from "./Components/PettingZones.tsx"
 import CatHappinessBar from "./Components/CatHappinessBar.tsx"
 import picture from "../src/assets/Cat Saying Hello.gif"
 import mapData from './mapData.json';
+import PlayerList from "./Components/PlayerList.tsx"
 
 const selectSound = new Audio(selectSoundAudio)
 
@@ -36,38 +37,15 @@ function App() {
     <>
       <CatHappinessBar catHappiness={catHappiness} />
       <img src={picture} useMap="#image-map" alt="Petting Zones Map" style={{ cursor: yourPlayerId ? 'grab' : 'default' }} />
-      {yourPlayerId && (
-        <PettingZones
-          imageName="image-map"
-          mapData={mapData}
-          playerId={yourPlayerId}
-        />
-      )}
+        {yourPlayerId && (
+          <PettingZones
+            imageName="image-map"
+            mapData={mapData}
+            playerId={yourPlayerId}
+          />
+        )}
 
-      <ul id="playersSection">
-        {playerIds.map((playerId, index) => {
-          const player = Rune.getPlayerInfo(playerId)
-
-          return (
-            <li key={playerId} data-player={index.toString()}>
-              <img src={player.avatarUrl} alt={`${player.displayName}'s avatar`} />
-              <span>
-                {game.scores[playerId]}
-                <br />
-                {player.displayName}
-                <br />
-                {scratches[playerId]}
-                {player.playerId === yourPlayerId && (
-                  <span>
-                    <br />
-                    (You)
-                  </span>
-                )}
-              </span>
-            </li>
-          )
-        })}
-      </ul>
+      <PlayerList playerIds={playerIds} game={game} yourPlayerId={yourPlayerId} scratches={scratches} />
     </>
   )
 }
