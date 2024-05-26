@@ -98,5 +98,19 @@ Rune.initLogic({
       });
     }
   },
-  updatesPerSecond: 1
+  updatesPerSecond: 1,
+  events: {
+    playerJoined: (playerId, { game }) => {
+      game.scores[playerId] = 0;
+      game.scratches[playerId] = 0;
+      if (!game.playerIds.includes(playerId)) {
+        game.playerIds.push(playerId);
+      }
+    },
+    playerLeft: (playerId, { game }) => {
+      game.scores[playerId] = 0;
+      game.scratches[playerId] = 0;
+      game.playerIds = game.playerIds.filter(id => id !== playerId);
+    }
+  }
 });
