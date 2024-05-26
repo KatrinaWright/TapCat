@@ -17,8 +17,31 @@
   
   .cat-happiness-fill {
     height: 100%;
-    background: linear-gradient(to right, red, orange, yellow, green, blue);
     border-radius: 15px;
+  }
+  
+  .cat-happiness-fill.red {
+    background-color: red;
+  }
+  
+  .cat-happiness-fill.orange {
+    background-color: orange;
+  }
+  
+  .cat-happiness-fill.yellow {
+    background-color: rgb(247, 247, 149);
+  }
+  
+  .cat-happiness-fill.green {
+    background-color: rgb(7, 197, 7);
+  }
+  
+  .cat-happiness-fill.blue {
+    background-color: rgb(102, 192, 252);
+  }
+  
+  .cat-happiness-fill.purple {
+    background-color: rgb(223, 6, 223);
   }
   
   .cat-happiness-text {
