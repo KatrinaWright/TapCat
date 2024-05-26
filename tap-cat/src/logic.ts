@@ -25,6 +25,14 @@ const isGameOver = (game: GameState): boolean => {
   return game.catHappiness >= 2000 || game.catHappiness <= 0;
 }
 
+const finalizeScores = (game: GameState) => {
+  game.playerIds.forEach(playerId => {
+    if (game.scores[playerId] < 0) {
+      game.scores[playerId] = 0;
+    }
+  });
+};
+
 Rune.initLogic({
   minPlayers: 1,
   maxPlayers: 5,
@@ -54,6 +62,7 @@ Rune.initLogic({
       game.catHappiness += amount; // Increase cat happiness with score updates
 
       if (isGameOver(game)) {
+        finalizeScores(game);
         Rune.gameOver({
           players: Object.fromEntries(game.playerIds.map(id => [id, game.scores[id]]))
         });
@@ -72,6 +81,7 @@ Rune.initLogic({
       game.catHappiness -= amount * 50; // Decrease cat happiness with scratches
 
       if (isGameOver(game)) {
+        finalizeScores(game);
         Rune.gameOver({
           players: Object.fromEntries(game.playerIds.map(id => [id, game.scores[id]]))
         });
@@ -82,6 +92,7 @@ Rune.initLogic({
     game.catHappiness -= 1; // Decrease cat happiness every second
 
     if (isGameOver(game)) {
+      finalizeScores(game);
       Rune.gameOver({
         players: Object.fromEntries(game.playerIds.map(id => [id, game.scores[id]]))
       });
