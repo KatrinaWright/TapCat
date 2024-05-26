@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { PlayerId } from "rune-games-sdk/multiplayer";
-import selectSoundAudio from "./assets/select.wav";
+
 import catHappyPurr from "./assets/purring-cat-156459.mp3"
 import catMadSound from "./assets/sat-on-the-cat-95941.mp3"
 import { GameState } from "./logic";
