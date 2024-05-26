@@ -1,5 +1,6 @@
 import React from 'react';
 import './CatHappinessBar.css';
+import PettingIcon from '../assets/petting.svg';
 
 interface CatHappinessBarProps {
   catHappiness: number;
@@ -26,6 +27,7 @@ const CatHappinessBar: React.FC<CatHappinessBarProps> = ({ catHappiness }) => {
         />
       </div>
       <div className="cat-happiness-text">
+        <img src={PettingIcon} alt="Petting icon" className="icon" />
         Cat Happiness: {happinessPercentage}%
       </div>
     </div>

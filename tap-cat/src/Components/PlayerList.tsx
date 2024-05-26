@@ -26,20 +26,20 @@ const PlayerList: React.FC<PlayerListProps> = ({ playerIds, game, yourPlayerId, 
             className={`player-card ${playerId === yourPlayerId ? 'current-player' : ''}`}
             data-player={index.toString()}
           >
-            <div className="player-info">
-              <img className="avatar" src={player.avatarUrl} alt={`${player.displayName}'s avatar`} />
-              <span className="player-name">
-                {player.displayName}
-              </span>
+            <div className="player-name">
+              {player.displayName}
             </div>
-            <div className="player-stats">
-              <div className="stat">
-                {game.scores[playerId]}
-                <img src={pointsIcon} alt="points icon" className="icon" />
-              </div>
-              <div className="stat">
-                {scratches[playerId]}
-                <img src={scratchIcon} alt="scratch icon" className="icon" />
+            <div className="player-info">
+              {/* <img className="avatar" src={player.avatarUrl} alt={`${player.displayName}'s avatar`} /> */}
+              <div className="player-stats">
+                <div className="stat">
+                  {game.scores[playerId]}
+                  <img src={pointsIcon} alt="points icon" className="icon" />
+                </div>
+                <div className="stat">
+                  {scratches[playerId]}
+                  <img src={scratchIcon} alt="scratch icon" className="icon" />
+                </div>
               </div>
             </div>
           </div>
