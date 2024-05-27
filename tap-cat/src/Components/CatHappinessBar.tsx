@@ -20,15 +20,15 @@ const CatHappinessBar: React.FC<CatHappinessBarProps> = ({ catHappiness }) => {
 
   return (
     <div className="cat-happiness-container">
+      <div className="cat-happiness-text">
+        <img src={PettingIcon} alt="Petting icon" className="icon" />
+        Cat Happiness: {happinessPercentage}%
+      </div>
       <div className="cat-happiness-bar">
         <div
           className={`cat-happiness-fill ${getColorClass(happinessPercentage)}`}
           style={{ width: `${happinessPercentage}%` }}
         />
-      </div>
-      <div className="cat-happiness-text">
-        <img src={PettingIcon} alt="Petting icon" className="icon" />
-        Cat Happiness: {happinessPercentage}%
       </div>
     </div>
   );

@@ -11,8 +11,8 @@
   height: 20px;
   background-color: #ddd;
   border-radius: 15px;
-  overflow: visible;
   position: relative;
+  margin-top: 40px;
 }
 
 .cat-happiness-fill {
