@@ -8,12 +8,13 @@
 
 .player-card {
   background-color: #444;
-  padding: 10px 20px;
+  padding: 10px 15px;
   border-radius: 8px;
   display: flex;
   align-items: center;
+  flex-direction: column;
   justify-content: space-between;
-  width: 75;
+  width: 75px;
   color: #e6e6e6;
 }
 
@@ -27,19 +28,6 @@
   align-items: center;
 }
 
-.avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  margin-right: 10px;
-}
-
-.player-name {
-  font-weight: bold;
-  overflow-wrap: break-word;
-  /* flex-wrap: wrap; */
-}
-
 .player-stats {
   display: flex;
   flex-direction: column;
@@ -49,11 +37,12 @@
 .stat {
   display: flex;
   align-items: center;
+  justify-content: right;
   margin: 5px 0;
 }
 
 .icon {
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
   margin-left: 5px;
 }
