@@ -14,7 +14,7 @@ interface PettingZonesProps {
   playerId: string;
 }
 
-const PettingZones: React.FC<PettingZonesProps> = ({ imageName, mapData, playerId}) => {
+const PettingZones: React.FC<PettingZonesProps> = ({ imageName, mapData, playerId }) => {
   const [activeZone, setActiveZone] = useState<string | null>(null);
   const actionQueue = useRef<{ playerId: string; amount: number }[]>([]);
   const lastActionTime = useRef<number>(0);
@@ -28,6 +28,7 @@ const PettingZones: React.FC<PettingZonesProps> = ({ imageName, mapData, playerI
       amount = -100;
       Rune.actions.updateScratch({ playerId, amount: 1 });
       console.log(`Player got scratched! ${playerId}`);
+
     } else {
       amount = Math.ceil(100 / zoneObject.rating);
     }
@@ -36,10 +37,10 @@ const PettingZones: React.FC<PettingZonesProps> = ({ imageName, mapData, playerI
     actionQueue.current.push({ playerId, amount });
   }, [playerId]);
 
-  const handlePointerDown = (zone: string) => {
+  const handlePointerDown = useCallback((zone: string) => {
     console.log(`Pointer down in ${zone}`);
     setActiveZone(zone);
-  };
+  }, []);
 
   const handlePointerMove = useCallback((event: MouseEvent | TouchEvent) => {
     event.preventDefault(); // Prevent default touch behavior
@@ -110,6 +111,7 @@ const PettingZones: React.FC<PettingZonesProps> = ({ imageName, mapData, playerI
       <map
         name={imageName}
         onPointerDown={(e: React.PointerEvent<HTMLElement>) => handlePointerDown((e.target as HTMLAreaElement).alt)}
+        style={{ cursor: playerId ? 'grabbing' : 'default' }}
       >
         {mapData.map((area, index) => (
           <area
@@ -121,6 +123,7 @@ const PettingZones: React.FC<PettingZonesProps> = ({ imageName, mapData, playerI
             onClick={() => rollDiceForZone(area)}
             coords={area.coords}
             shape={area.shape}
+            style={{ cursor: 'grab' }}
           />
         ))}
       </map>

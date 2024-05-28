@@ -1,0 +1,76 @@
+.cat-happiness-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.cat-happiness-bar {
+  width: 60%; /* Adjust to match the width of the cat image */
+  max-width: 600px; /* Ensure it doesn't get too large on wider screens */
+  height: 30px;
+  background-color: #ddd;
+  border-radius: 15px;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.cat-happiness-fill {
+  height: 100%;
+  border-radius: 15px;
+  transition: width 0.5s; /* Smooth transition */
+}
+
+.cat-happiness-fill.red {
+  background-color: red;
+}
+
+.cat-happiness-fill.orange {
+  background-color: orange;
+}
+
+.cat-happiness-fill.yellow {
+  background-color: rgb(247, 247, 71);
+}
+
+.cat-happiness-fill.green {
+  background-color: rgb(7, 197, 7);
+}
+
+.cat-happiness-fill.blue {
+  background-color: rgb(102, 192, 252);
+}
+
+.cat-happiness-fill.purple {
+  background-color: rgb(223, 6, 223);
+}
+
+.happiness-text {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  color: black;
+  font-weight: bold;
+  z-index: 1; /* Ensure the text is above the bar */
+}
+
+.side-image {
+  width: 40px;
+  height: 40px;
+  margin: 0 10px;
+}
+
+@media (max-width: 600px) {
+  .cat-happiness-bar {
+    width: 100%; /* Make sure it takes full width on smaller screens */
+    height: 25px; /* Adjust height for smaller screens */
+  }
+
+  .icon {
+    width: 20px; /* Adjust icon size for smaller screens */
+    height: 20px;
+  }
+}
