@@ -1,9 +1,9 @@
 import React from 'react';
 import { PlayerId } from "rune-games-sdk/multiplayer";
-import scratchIcon from '../assets/scratch-icon.png'; // Adjust the path as needed
-import pointsIcon from '../assets/heart-eyes-cat.svg'; // Adjust the path as needed
+import scratchIcon from '../assets/lion.svg'; 
+import pointsIcon from '../assets/heart-eyes-cat.svg'; 
 import { GameState } from '../logic';
-import './PlayerList.css'; // Make sure to create and adjust the path as needed
+import './PlayerList.css'; 
 
 interface PlayerListProps {
   playerIds: PlayerId[];
@@ -30,7 +30,6 @@ const PlayerList: React.FC<PlayerListProps> = ({ playerIds, game, yourPlayerId, 
               {player.displayName}
             </div>
             <div className="player-info">
-              {/* <img className="avatar" src={player.avatarUrl} alt={`${player.displayName}'s avatar`} /> */}
               <div className="player-stats">
                 <div className="stat">
                   {game.scores[playerId]}

@@ -1,7 +1,7 @@
 import React from 'react';
 import Lottie from 'react-lottie';
-import animationData from '../assets/swipe-left.json'; // Adjust the path as needed
-import './IdleAnimationOverlay.css'; // Ensure the path is correct
+import animationData from '../assets/swipe-left.json'; 
+import './IdleAnimationOverlay.css'; 
 
 interface IdleAnimationOverlayProps {
   idle: boolean;

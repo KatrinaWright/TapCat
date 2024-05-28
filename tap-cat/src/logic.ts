@@ -35,7 +35,7 @@ const finalizeScores = (game: GameState) => {
 
 Rune.initLogic({
   minPlayers: 1,
-  maxPlayers: 5,
+  maxPlayers: 6,
   setup: (allPlayerIds) => ({
     scores: Object.fromEntries(allPlayerIds.map(id => [id, 0])),
     scratched: false,
@@ -43,7 +43,7 @@ Rune.initLogic({
     playerIds: allPlayerIds,
     count: 0,
     scratches: Object.fromEntries(allPlayerIds.map(id => [id, 0])),
-    catHappiness: 50,
+    catHappiness: 205,
   }),
   actions: {
     increment: ({ amount }, { game }) => {
