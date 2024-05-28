@@ -1,10 +1,5 @@
 import type { PlayerId, RuneClient } from "rune-games-sdk/multiplayer";
 
-// import pictureHello from "../src/CatMaps__dkf-recreated/CatSayingHello.gif";
-// import mapDataHello from "../src/CatMaps__dkf-recreated/CatSayingHellomapData.json";
-// import pictureYarn from "../src/CatMaps__dkf-recreated/YarnCat.gif";
-// import mapDataYarn from "../src/CatMaps__dkf-recreated/YarnCatMapData.json";
-
 export interface GameState {
   scores: { [key: string]: number },
   scratched: boolean,
@@ -14,9 +9,6 @@ export interface GameState {
   catHappiness: number,
   lastScratcher: PlayerId | null,
   lastScratchTime: number | null,
-  // catId: boolean | null,
-  // picture: string | null,
-  // mapData: any,
 }
 
 type GameActions = {
@@ -42,19 +34,6 @@ const finalizeScores = (game: GameState) => {
   });
 };
 
-// let catId = true;
-
-// // export const setupGame = (): GameState => {
-//   export const setupGame = (game: GameState) => {
-//   catId = !catId;
-//   const picture = catId ? pictureHello : pictureYarn;
-//   const mapData = catId ? mapDataHello : mapDataYarn;
-//   return {
-//     picture,
-//     mapData, 
-//     };
-//   };
-
 Rune.initLogic({
   minPlayers: 1,
   maxPlayers: 6,
@@ -67,9 +46,6 @@ Rune.initLogic({
     catHappiness: 205,
     lastScratcher: null,
     lastScratchTime: null,
-    // catId: true,
-    // picture: pictureHello,
-    // mapData: mapDataHello,
   }),
 
   actions: {
@@ -119,8 +95,6 @@ Rune.initLogic({
     if (game.lastScratchTime !== null && Rune.gameTime() - game.lastScratchTime > 500) {
       game.lastScratcher = null;
       game.lastScratchTime = null;
-      // catId = !catId;
-      // setupGame(game);
     }
 
     if (isGameOver(game)) {
@@ -128,7 +102,6 @@ Rune.initLogic({
       Rune.gameOver({
         players: Object.fromEntries(game.playerIds.map(id => [id, game.scores[id]]))
       });
-      // setupGame(game);
     }
   },
   updatesPerSecond: 1,
