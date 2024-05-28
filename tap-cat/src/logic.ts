@@ -9,6 +9,7 @@ export interface GameState {
   catHappiness: number,
   lastScratcher: PlayerId | null,
   lastScratchTime: number | null,
+  // catId: boolean | null,
 }
 
 type GameActions = {
@@ -46,6 +47,7 @@ Rune.initLogic({
     catHappiness: 205,
     lastScratcher: null,
     lastScratchTime: null,
+    // catId: true,
   }),
   actions: {
     updateScore: ({ playerId, amount }, { game }) => {

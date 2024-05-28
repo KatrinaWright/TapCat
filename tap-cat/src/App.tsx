@@ -7,11 +7,10 @@ import PettingZones from "./Components/PettingZones";
 import PlayerList from "./Components/PlayerList";
 import CatHappinessBar from "./Components/CatHappinessBar";
 import IdleAnimationOverlay from "./Components/IdleAnimationOverlay";
-import picture from "../src/assets/Cat Saying Hello.gif";
-import mapData from "./mapData.json";
-// Would need to import this as well
-// Sends mapData into pettingZones & imageMap (imageMap is fine)
-// Trick is keeping track of which JSON file attached to which cat gif
+import pictureHello from "../src/CatMaps__dkf-recreated/CatSayingHello.gif";
+import mapDataHello from "../src/CatMaps__dkf-recreated/CatSayingHellomapData.json";
+import pictureYarn from "../src/CatMaps__dkf-recreated/YarnCat.gif";
+import mapDataYarn from "../src/CatMaps__dkf-recreated/YarnCatMapData.json";
 
 //const selectSound = new Audio(selectSoundAudio);
 const MadSound = new Audio(catMadSound);
@@ -60,13 +59,11 @@ function App() {
   return (
     <div onMouseMove={handleInteraction} onTouchMove={handleInteraction}>
       <CatHappinessBar catHappiness={catHappiness} />
-      <img src={picture} useMap="#image-map" alt="Petting Zones Map" />
-      {/* {picture will need updating/re-mapping} */}
+      <img src={pictureHello} useMap="#image-map" alt="Petting Zones Map" />
       {yourPlayerId && (
         <PettingZones
           imageName="image-map"
-          mapData={mapData}
-          // {mapData} would also need to change
+          mapData={mapDataHello}
           playerId={yourPlayerId}
         />
       )}

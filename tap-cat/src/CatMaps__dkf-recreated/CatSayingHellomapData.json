@@ -1,0 +1,435 @@
+[
+    {
+      "title": "Mouth",
+      "rating": 25,
+      "coords": "216,155,14",
+      "shape": "circle"
+    },
+    {
+      "title": "PassPaw",
+      "rating": 40,
+      "coords": "225,313,11",
+      "shape": "circle"
+    },
+    {
+      "title": "DriveFoot1",
+      "rating": 40,
+      "coords": "241,301,10",
+      "shape": "circle"
+    },
+    {
+      "title": "PassFoot2",
+      "rating": 40,
+      "coords": "137,303,179,320",
+      "shape": "rect"
+    },
+    {
+      "title": "PassFoot1",
+      "rating": 40,
+      "coords": "187,312,11",
+      "shape": "circle"
+    },
+    {
+      "title": "DriveFoot2",
+      "rating": 40,
+      "coords": "197,288,189,298,197,305,197,312,207,311",
+      "shape": "poly"
+    },
+    {
+      "title": "DriveFoot3",
+      "rating": 40,
+      "coords": "249,277,228,284,229,296,237,290,244,290",
+      "shape": "poly"
+    },
+    {
+      "title": "Back1",
+      "rating": 500,
+      "coords": "162,209,171,224",
+      "shape": "rect"
+    },
+    {
+      "title": "Back2",
+      "rating": 500,
+      "coords": "153,214,161,230",
+      "shape": "rect"
+    },
+    {
+      "title": "Back3",
+      "rating": 500,
+      "coords": "145,222,153,238",
+      "shape": "rect"
+    },
+    {
+      "title": "Back4",
+      "rating": 500,
+      "coords": "137,231,144,248",
+      "shape": "rect"
+    },
+    {
+      "title": "Back5",
+      "rating": 500,
+      "coords": "162,225,173,240",
+      "shape": "rect"
+    },
+    {
+      "title": "Back6",
+      "rating": 500,
+      "coords": "153,231,161,248",
+      "shape": "rect"
+    },
+    {
+      "title": "Back7",
+      "rating": 500,
+      "coords": "145,238,153,254",
+      "shape": "rect"
+    },
+    {
+      "title": "PassArm1",
+      "rating": 40,
+      "coords": "213,318,205,301,227,292,232,302,217,303,213,312",
+      "shape": "poly"
+    },
+    {
+      "title": "PassArm2",
+      "rating": 40,
+      "coords": "205,300,197,287,195,277,225,271,229,291,217,296",
+      "shape": "poly"
+    },
+    {
+      "title": "Belly1",
+      "rating": 25,
+      "coords": "225,268,259,268,248,278,229,283",
+      "shape": "poly"
+    },
+    {
+      "title": "Belly2",
+      "rating": 25,
+      "coords": "224,253,244,251,243,268,223,268",
+      "shape": "poly"
+    },
+    {
+      "title": "Belly3",
+      "rating": 25,
+      "coords": "245,250,270,251,262,266",
+      "shape": "poly"
+    },
+    {
+      "title": "Belly4",
+      "rating": 25,
+      "coords": "263,267,243,268,245,250,260,264",
+      "shape": "poly"
+    },
+    {
+      "title": "Belly5",
+      "rating": 25,
+      "coords": "276,234,271,251,246,251",
+      "shape": "poly"
+    },
+    {
+      "title": "Belly6",
+      "rating": 25,
+      "coords": "248,251,224,251,227,233",
+      "shape": "poly"
+    },
+    {
+      "title": "Face1",
+      "rating": 150,
+      "coords": "228,144,251,161,241,194",
+      "shape": "poly"
+    },
+    {
+      "title": "Face2",
+      "rating": 150,
+      "coords": "201,149,189,173,209,201",
+      "shape": "poly"
+    },
+    {
+      "title": "Face3",
+      "rating": 150,
+      "coords": "203,164,229,200,210,203",
+      "shape": "poly"
+    },
+    {
+      "title": "Face4",
+      "rating": 150,
+      "coords": "231,160,241,196,227,200",
+      "shape": "poly"
+    },
+    {
+      "title": "Face5",
+      "rating": 150,
+      "coords": "228,177,214,180,227,195",
+      "shape": "poly"
+    },
+    {
+      "title": "Face6",
+      "rating": 150,
+      "coords": "230,161,224,168,215,170,204,164,215,180,229,178",
+      "shape": "poly"
+    },
+    {
+      "title": "EyePass",
+      "rating": 10,
+      "coords": "182,141,12",
+      "shape": "circle"
+    },
+    {
+      "title": "EyeDrive",
+      "rating": 10,
+      "coords": "247,128,13",
+      "shape": "circle"
+    },
+    {
+      "title": "Face7",
+      "rating": 75,
+      "coords": "194,139,201,148,189,172,179,157",
+      "shape": "poly"
+    },
+    {
+      "title": "Face8",
+      "rating": 75,
+      "coords": "232,131,227,144,251,159,256,138",
+      "shape": "poly"
+    },
+    {
+      "title": "Nose1",
+      "rating": 400,
+      "coords": "202,148,199,141,226,137",
+      "shape": "poly"
+    },
+    {
+      "title": "Nose2",
+      "rating": 400,
+      "coords": "227,144,231,128,196,138",
+      "shape": "poly"
+    },
+    {
+      "title": "Nose3",
+      "rating": 400,
+      "coords": "195,137,188,127,233,128",
+      "shape": "poly"
+    },
+    {
+      "title": "Nose4",
+      "rating": 400,
+      "coords": "239,114,233,127,188,126,221,118",
+      "shape": "poly"
+    },
+    {
+      "title": "Forehead1",
+      "rating": 600,
+      "coords": "170,131,137,113,170,121,149,96,179,111,161,82,190,101,174,74,202,95,195,66,221,91,216,60,246,89,238,62,253,89,256,73,260,92,271,88,267,99,283,98,271,108,255,116,253,101,240,113,233,94,225,114,211,97,205,117,197,103,194,122,183,125",
+      "shape": "poly"
+    },
+    {
+      "title": "Forehead2",
+      "rating": 600,
+      "coords": "124,72,137,114,172,121",
+      "shape": "poly"
+    },
+    {
+      "title": "Forehead3",
+      "rating": 600,
+      "coords": "124,71,160,81,176,109,147,95",
+      "shape": "poly"
+    },
+    {
+      "title": "Forehead4",
+      "rating": 600,
+      "coords": "126,70,126,60,137,60,160,80,173,76,188,98",
+      "shape": "poly"
+    },
+    {
+      "title": "Forehead5",
+      "rating": 600,
+      "coords": "140,60,160,79,173,75",
+      "shape": "poly"
+    },
+    {
+      "title": "Forehead6",
+      "rating": 600,
+      "coords": "172,73,200,92,194,62,181,65",
+      "shape": "poly"
+    },
+    {
+      "title": "Forehead7",
+      "rating": 600,
+      "coords": "193,63,220,88,214,59",
+      "shape": "poly"
+    },
+    {
+      "title": "Forehead8",
+      "rating": 600,
+      "coords": "216,59,244,85,237,62,252,87,266,34,240,54,230,60",
+      "shape": "poly"
+    },
+    {
+      "title": "Forehead9",
+      "rating": 600,
+      "coords": "195,122,197,106,205,117,211,99,223,114,233,97,238,112,252,103,254,115",
+      "shape": "poly"
+    },
+    {
+      "title": "TailBase",
+      "rating": 300,
+      "coords": "121,260,105,282",
+      "shape": "rect"
+    },
+    {
+      "title": "Cheek1",
+      "rating": 300,
+      "coords": "169,132,136,114,161,140,137,143,161,152,141,165,164,169,117,187,166,181,166,193,195,189,191,199,208,202",
+      "shape": "poly"
+    },
+    {
+      "title": "Cheek2",
+      "rating": 300,
+      "coords": "207,203,178,201,163,197,146,186,164,182,168,192,193,189,190,199",
+      "shape": "poly"
+    },
+    {
+      "title": "Cheek3",
+      "rating": 300,
+      "coords": "138,116,133,128,131,142,131,149,132,156,105,165,134,162,139,178,160,170,141,166,157,152,138,145,158,139",
+      "shape": "poly"
+    },
+    {
+      "title": "Cheek4",
+      "rating": 300,
+      "coords": "242,196,261,182,253,176,278,166,263,157,283,146,270,142,327,125,271,133,292,118,270,119,288,105,285,97,271,109,256,117,261,130",
+      "shape": "poly"
+    },
+    {
+      "title": "Cheek5",
+      "rating": 300,
+      "coords": "243,197,271,184,286,172,294,158,297,152,326,152,295,147,297,139,300,134,273,142,284,144,265,157,278,165,255,176,262,182",
+      "shape": "poly"
+    },
+    {
+      "title": "Cheek6",
+      "rating": 300,
+      "coords": "296,128,273,132,295,117,273,117,288,106,284,97,268,97,271,87,261,90,257,73,278,87,292,110",
+      "shape": "poly"
+    },
+    {
+      "title": "Ear1",
+      "rating": 300,
+      "coords": "256,72,256,71,279,73,260,58,277,57,263,46,275,44,266,35,256,72",
+      "shape": "poly"
+    },
+    {
+      "title": "Ear2",
+      "rating": 300,
+      "coords": "268,32,278,46,278,60,280,85,280,91,255,72,277,75,263,60,276,54,266,47",
+      "shape": "poly"
+    },
+    {
+      "title": "Tail1",
+      "rating": 100,
+      "coords": "106,281,85,271,75,261,72,251,90,244,101,243,109,239,116,260,106,261",
+      "shape": "poly"
+    },
+    {
+      "title": "Tail2",
+      "rating": 100,
+      "coords": "71,250,64,214,113,196,110,240",
+      "shape": "poly"
+    },
+    {
+      "title": "Tail3",
+      "rating": 100,
+      "coords": "64,213,33,211,36,176,48,139,76,151,100,163,110,180,111,196",
+      "shape": "poly"
+    },
+    {
+      "title": "BackLeg1",
+      "rating": 100,
+      "coords": "141,302,196,287,182,302",
+      "shape": "poly"
+    },
+    {
+      "title": "Butt1",
+      "rating": 1000,
+      "coords": "135,238,128,251,148,271",
+      "shape": "poly"
+    },
+    {
+      "title": "Butt2",
+      "rating": 1000,
+      "coords": "147,270,140,279,126,251",
+      "shape": "poly"
+    },
+    {
+      "title": "Butt3",
+      "rating": 1000,
+      "coords": "126,252,123,264,138,279",
+      "shape": "poly"
+    },
+    {
+      "title": "Butt4",
+      "rating": 1000,
+      "coords": "137,278,124,267,123,277",
+      "shape": "poly"
+    },
+    {
+      "title": "Butt5",
+      "rating": 300,
+      "coords": "138,279,124,279,130,290,137,295,140,301,195,286,145,289",
+      "shape": "poly"
+    },
+    {
+      "title": "BackLeg2",
+      "rating": 100,
+      "coords": "195,287,194,274,181,264,146,289",
+      "shape": "poly"
+    },
+    {
+      "title": "midBod",
+      "rating": 500,
+      "coords": "145,288,141,280,149,270,141,250,151,255,154,249,161,251,162,241,173,241",
+      "shape": "poly"
+    },
+    {
+      "title": "WavingArm",
+      "rating": 100,
+      "coords": "272,225,297,185",
+      "shape": "rect"
+    },
+    {
+      "title": "midBod",
+      "rating": 500,
+      "coords": "146,287,173,240,225,232",
+      "shape": "poly"
+    },
+    {
+      "title": "midBod",
+      "rating": 500,
+      "coords": "170,203,226,232,174,240",
+      "shape": "poly"
+    },
+    {
+      "title": "WavingPaw",
+      "rating": 100,
+      "coords": "274,184,296,162,313,181,314,212,298,225,298,184",
+      "shape": "poly"
+    },
+    {
+      "title": "Leg",
+      "rating": 300,
+      "coords": "225,235,182,263,194,275,223,270",
+      "shape": "poly"
+    },
+    {
+      "title": "Chest1",
+      "rating": 750,
+      "coords": "270,185,223,203,173,201,191,214,235,205,266,191,269,199,219,219,269,206,270,215,230,229,270,223,271,231,239,237,263,239,247,249,275,233",
+      "shape": "poly"
+    },
+    {
+      "title": "Chest2",
+      "rating": 750,
+      "coords": "195,215,265,192,267,198,219,218,267,208,269,214,230,229,269,225,266,231,239,236,257,241,246,249",
+      "shape": "poly"
+    }
+  ]
+  

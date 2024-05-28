@@ -1,0 +1,332 @@
+[
+    {
+        "title": "Eye1Left",
+        "rating": 111,
+        "coords": "148,150,18",
+        "shape": "circle"
+    },
+    {
+        "title": "Eye2Right",
+        "rating": 111,
+        "coords": "225,131,17",
+        "shape": "circle"
+    },
+    {
+        "title": "NoseAndMouth",
+        "rating": 666,
+        "coords": "194,164,20",
+        "shape": "circle"
+    },
+    {
+        "title": "Paw1LeftFoot",
+        "rating": 333,
+        "coords": "239,309,28",
+        "shape": "circle"
+    },
+    {
+        "title": "Paw2RightFoot",
+        "rating": 444,
+        "coords": "286,301,26",
+        "shape": "circle"
+    },
+    {
+        "title": "Paw3ArmUpper",
+        "rating": 555,
+        "coords": "235,226,23",
+        "shape": "circle"
+    },
+    {
+        "title": "Paw3ArmLower",
+        "rating": 555,
+        "coords": "241,246,21",
+        "shape": "circle"
+    },
+    {
+        "title": "Ear1Left",
+        "rating": 777,
+        "coords": "71,52,95,127,139,63",
+        "shape": "poly"
+    },
+    {
+        "title": "Ear2Right",
+        "rating": 777,
+        "coords": "254,14,202,52,268,90",
+        "shape": "poly"
+    },
+    {
+        "title": "YarnUpper",
+        "rating": 111,
+        "coords": "276,226,52",
+        "shape": "circle"
+    },
+    {
+        "title": "YarnLower",
+        "rating": 111,
+        "coords": "272,250,52",
+        "shape": "circle"
+    },
+    {
+        "title": "Tail1Base",
+        "rating": 999,
+        "coords": "106,282,133,320",
+        "shape": "rect"
+    },
+    {
+        "title": "Tail2MiddleNearBase",
+        "rating": 909,
+        "coords": "108,268,105,320,67,276",
+        "shape": "poly"
+    },
+    {
+        "title": "Tail4EndUpper",
+        "rating": 858,
+        "coords": "58,242,85,253,140,247,141,226,119,208,91,202,68,215",
+        "shape": "poly"
+    },
+    {
+        "title": "Tail4EndLower",
+        "rating": 858,
+        "coords": "29,273,19,324,54,322,75,287,51,257",
+        "shape": "poly"
+    },
+    {
+        "title": "Tail2MidNearEndUpper",
+        "rating": 888,
+        "coords": "89,275,56,244",
+        "shape": "rect"
+    },
+    {
+        "title": "Tail2MidNearEndLower",
+        "rating": 888,
+        "coords": "82,331,106,319,78,288,70,290,51,325",
+        "shape": "poly"
+    },
+    {
+        "title": "Tail5Other",
+        "rating": 888,
+        "coords": "131,249,125,282,110,281,106,268,90,270,86,252",
+        "shape": "poly"
+    },
+    {
+        "title": "Eyebrow1Left",
+        "rating": 858,
+        "coords": "124,99,151,118",
+        "shape": "rect"
+    },
+    {
+        "title": "Eyebrow2Right",
+        "rating": 858,
+        "coords": "206,78,237,97",
+        "shape": "rect"
+    },
+    {
+        "title": "ThighNearPaw",
+        "rating": 333,
+        "coords": "176,274,222,334",
+        "shape": "rect"
+    },
+    {
+        "title": "BootyNearTail",
+        "rating": 999,
+        "coords": "132,285,156,314",
+        "shape": "rect"
+    },
+    {
+        "title": "Butt",
+        "rating": 111,
+        "coords": "136,315,159,331,159,315",
+        "shape": "poly"
+    },
+    {
+        "title": "ButtNearThigh",
+        "rating": 222,
+        "coords": "160,315,175,332",
+        "shape": "rect"
+    },
+    {
+        "title": "ThighNearButt",
+        "rating": 333,
+        "coords": "156,286,175,314",
+        "shape": "rect"
+    },
+    {
+        "title": "BellyUpper",
+        "rating": 151,
+        "coords": "200,236,225,207,255,212,235,240",
+        "shape": "poly"
+    },
+    {
+        "title": "BellyLower",
+        "rating": 151,
+        "coords": "198,259,196,272,223,284,241,277,263,288,275,275,260,237,219,256",
+        "shape": "poly"
+    },
+    {
+        "title": "Arm",
+        "rating": 333,
+        "coords": "184,227,178,265,223,267,231,252,231,211,208,225",
+        "shape": "poly"
+    },
+    {
+        "title": "NearBelly",
+        "rating": 202,
+        "coords": "175,266,198,273",
+        "shape": "rect"
+    },
+    {
+        "title": "BackLower",
+        "rating": 858,
+        "coords": "138,243,129,284,174,285",
+        "shape": "poly"
+    },
+    {
+        "title": "BackMiddle",
+        "rating": 777,
+        "coords": "140,244,180,244,175,285",
+        "shape": "poly"
+    },
+    {
+        "title": "BackUpper",
+        "rating": 666,
+        "coords": "144,219,182,244",
+        "shape": "rect"
+    },
+    {
+        "title": "Chest",
+        "rating": 757,
+        "coords": "182,218,182,229,211,224,214,213,198,220",
+        "shape": "poly"
+    },
+    {
+        "title": "Cheek1Left",
+        "rating": 909,
+        "coords": "111,182,16",
+        "shape": "circle"
+    },
+    {
+        "title": "Cheek2Right",
+        "rating": 909,
+        "coords": "275,145,17",
+        "shape": "circle"
+    },
+    {
+        "title": "HeadTop",
+        "rating": 999,
+        "coords": "139,64,112,100,234,71,195,49,163,53",
+        "shape": "poly"
+    },
+    {
+        "title": "Chin",
+        "rating": 808,
+        "coords": "115,204,143,219,195,220,251,199,278,174,228,193,172,205",
+        "shape": "poly"
+    },
+    {
+        "title": "Whisker1LeftUpper",
+        "rating": 222,
+        "coords": "60,173,62,187,95,177,95,162,77,170",
+        "shape": "poly"
+    },
+    {
+        "title": "Whisker2LeftLower",
+        "rating": 222,
+        "coords": "71,199,78,208,102,200,95,190",
+        "shape": "poly"
+    },
+    {
+        "title": "HeartBonus",
+        "rating": 999,
+        "coords": "307,78,31",
+        "shape": "circle"
+    },
+    {
+        "title": "Whisker3RightUpper",
+        "rating": 222,
+        "coords": "287,125,287,135,323,132,315,113",
+        "shape": "poly"
+    },
+    {
+        "title": "Whisker4RightLower",
+        "rating": 222,
+        "coords": "293,145,289,156,317,161,315,147,306,148",
+        "shape": "poly"
+    },
+    {
+        "title": "UnderEar1Left",
+        "rating": 888,
+        "coords": "94,128,113,101,123,98,125,120",
+        "shape": "poly"
+    },
+    {
+        "title": "UnderEar2Right",
+        "rating": 888,
+        "coords": "237,74,237,97,267,90",
+        "shape": "poly"
+    },
+    {
+        "title": "Forehead",
+        "rating": 999,
+        "coords": "232,72,236,77,206,78,206,97,184,120,151,116,152,101,122,97,231,71",
+        "shape": "poly"
+    },
+    {
+        "title": "UpperCheek1Left",
+        "rating": 777,
+        "coords": "98,128,95,148,97,170,107,163,127,174,134,166,128,142,122,121",
+        "shape": "poly"
+    },
+    {
+        "title": "UpperCheek2Right",
+        "rating": 777,
+        "coords": "240,97,269,90,281,110,283,129,267,129,258,142,244,138,239,116,228,98",
+        "shape": "poly"
+    },
+    {
+        "title": "BetweenEyes",
+        "rating": 858,
+        "coords": "153,117,182,121,205,98,215,116,209,131,215,149,189,144,170,162,161,133",
+        "shape": "poly"
+    },
+    {
+        "title": "AboveEye1Left",
+        "rating": 353,
+        "coords": "123,120,154,117,161,134,144,129,129,145",
+        "shape": "poly"
+    },
+    {
+        "title": "AboveEye2Right",
+        "rating": 353,
+        "coords": "207,98,228,95,240,118,225,111,215,116",
+        "shape": "poly"
+    },
+    {
+        "title": "BelowEye1Left",
+        "rating": 272,
+        "coords": "128,171,134,164,149,167,161,162,167,151,172,157,174,170,153,192,126,191",
+        "shape": "poly"
+    },
+    {
+        "title": "BelowEye2Right",
+        "rating": 272,
+        "coords": "210,149,219,152,231,149,241,140,256,138,258,152,267,163,239,175,215,157",
+        "shape": "poly"
+    },
+    {
+        "title": "Cheek1Left",
+        "rating": 666,
+        "coords": "173,169,187,201,170,206,117,203,115,200,127,190,151,192",
+        "shape": "poly"
+    },
+    {
+        "title": "Cheek3Right",
+        "rating": 666,
+        "coords": "215,157,236,174,268,161,284,160,276,174,254,184,227,192",
+        "shape": "poly"
+    },
+    {
+        "title": "Cheek2Middle",
+        "rating": 888,
+        "coords": "177,175,186,201,228,193,218,162,205,182,190,184",
+        "shape": "poly"
+    }
+]
