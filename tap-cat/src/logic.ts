@@ -9,12 +9,12 @@ export interface GameState {
   catHappiness: number,
   lastScratcher: PlayerId | null,
   lastScratchTime: number | null,
+  catSelection: number, 
 }
 
 type GameActions = {
   updateScore: (params: { playerId: PlayerId, amount: number }) => void;
   updateScratch: (params: { playerId: PlayerId, amount: number }) => void;
-  // resetLastScratcher: () => void;
 }
 
 declare global {
@@ -22,7 +22,6 @@ declare global {
 }
 
 const isGameOver = (game: GameState): boolean => {
-  // Game over if catHappiness reaches 2000 or drops to 0
   return game.catHappiness >= 2000 || game.catHappiness <= 0;
 }
 
@@ -46,8 +45,8 @@ Rune.initLogic({
     catHappiness: 205,
     lastScratcher: null,
     lastScratchTime: null,
+    catSelection: Math.floor(Math.random() * 2), // Randomly select a cat image
   }),
-
   actions: {
     updateScore: ({ playerId, amount }, { game }) => {
       if (!game.playerIds.includes(playerId)) {
@@ -59,7 +58,7 @@ Rune.initLogic({
       }
 
       game.scores[playerId] += amount;
-      game.catHappiness += amount; 
+      game.catHappiness += amount;
 
       if (isGameOver(game)) {
         finalizeScores(game);
@@ -78,8 +77,8 @@ Rune.initLogic({
       }
 
       game.scratches[playerId] += amount;
-      game.catHappiness -= amount * 50; 
-      game.lastScratcher = playerId; 
+      game.catHappiness -= amount * 50;
+      game.lastScratcher = playerId;
       game.lastScratchTime = Rune.gameTime();
 
       if (isGameOver(game)) {
@@ -88,10 +87,10 @@ Rune.initLogic({
           players: Object.fromEntries(game.playerIds.map(id => [id, game.scores[id]]))
         });
       }
-    },
+    }
   },
   update: ({ game }) => {
-    game.catHappiness -= 1; // Decrease cat happiness every second
+    game.catHappiness -= 1;
     if (game.lastScratchTime !== null && Rune.gameTime() - game.lastScratchTime > 500) {
       game.lastScratcher = null;
       game.lastScratchTime = null;

@@ -12,7 +12,6 @@ import mapDataHello from "../src/CatMaps__dkf-recreated/CatSayingHellomapData.js
 import pictureYarn from "../src/CatMaps__dkf-recreated/YarnCat.gif";
 import mapDataYarn from "../src/CatMaps__dkf-recreated/YarnCatMapData.json";
 
-//const selectSound = new Audio(selectSoundAudio);
 const MadSound = new Audio(catMadSound);
 const purrSound = new Audio(catHappyPurr);
 
@@ -21,7 +20,6 @@ function App() {
   const [yourPlayerId, setYourPlayerId] = useState<PlayerId | undefined>();
   const [idle, setIdle] = useState(false);
   const lastInteractionTimeRef = useRef<number>(Date.now());
-  const [catId, setCatId] = useState(false);
 
   const handleInteraction = () => {
     lastInteractionTimeRef.current = Date.now();
@@ -32,7 +30,6 @@ function App() {
     Rune.initClient({
       onChange: ({ game, action, yourPlayerId }) => {
         setGame(game);
-        setCatId(!catId);
         setYourPlayerId(yourPlayerId);
 
         if (action && action.name === "updateScratch") MadSound.play();
@@ -49,18 +46,17 @@ function App() {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [catId]); // Had to add this as a dependency to trigger the game to finish after updating the useEffect to include "setCatId(!catId);" {DKF}
+  }, []);
 
   if (!game) {
     // Rune only shows your game after an onChange() so no need for loading screen
     return null;
   }
 
-  const { playerIds, scratches, catHappiness } = game;
+  const { playerIds, scratches, catHappiness, catSelection } = game;
 
-  // It looks like the useEffect is only triggered by the initial load and not subsequent games, beacuse this always defaults to the yarn version (when setting the initial useState to "True", and vice versa) {DKF}
-  const picture = catId ? pictureHello : pictureYarn;
-  const mapData = catId ? mapDataHello : mapDataYarn;
+  const picture = catSelection === 0 ? pictureHello : pictureYarn;
+  const mapData = catSelection === 0 ? mapDataHello : mapDataYarn;
 
   return (
     <div onMouseMove={handleInteraction} onTouchMove={handleInteraction}>

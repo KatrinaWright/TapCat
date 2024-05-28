@@ -1,31 +1,31 @@
 [
     {
         "title": "Eye1Left",
-        "rating": 111,
+        "rating": 25,
         "coords": "148,150,18",
         "shape": "circle"
     },
     {
         "title": "Eye2Right",
-        "rating": 111,
+        "rating": 25,
         "coords": "225,131,17",
         "shape": "circle"
     },
     {
         "title": "NoseAndMouth",
-        "rating": 666,
+        "rating": 200,
         "coords": "194,164,20",
         "shape": "circle"
     },
     {
         "title": "Paw1LeftFoot",
-        "rating": 333,
+        "rating": 50,
         "coords": "239,309,28",
         "shape": "circle"
     },
     {
         "title": "Paw2RightFoot",
-        "rating": 444,
+        "rating": 50,
         "coords": "286,301,26",
         "shape": "circle"
     },
@@ -55,13 +55,13 @@
     },
     {
         "title": "YarnUpper",
-        "rating": 111,
+        "rating": 25,
         "coords": "276,226,52",
         "shape": "circle"
     },
     {
         "title": "YarnLower",
-        "rating": 111,
+        "rating": 25,
         "coords": "272,250,52",
         "shape": "circle"
     },
@@ -133,7 +133,7 @@
     },
     {
         "title": "Butt",
-        "rating": 111,
+        "rating": 25,
         "coords": "136,315,159,331,159,315",
         "shape": "poly"
     },
@@ -151,13 +151,13 @@
     },
     {
         "title": "BellyUpper",
-        "rating": 151,
+        "rating": 50,
         "coords": "200,236,225,207,255,212,235,240",
         "shape": "poly"
     },
     {
         "title": "BellyLower",
-        "rating": 151,
+        "rating": 50,
         "coords": "198,259,196,272,223,284,241,277,263,288,275,275,260,237,219,256",
         "shape": "poly"
     },
@@ -169,7 +169,7 @@
     },
     {
         "title": "NearBelly",
-        "rating": 202,
+        "rating": 100,
         "coords": "175,266,198,273",
         "shape": "rect"
     },
