@@ -5,15 +5,16 @@ export interface GameState {
   scratched: boolean,
   lastMovePlayerId: PlayerId | null,
   playerIds: PlayerId[],
-  count: number,
   scratches: { [key: string]: number },
   catHappiness: number,
+  lastScratcher: PlayerId | null,
+  lastScratchTime: number | null,
 }
 
 type GameActions = {
   updateScore: (params: { playerId: PlayerId, amount: number }) => void;
   updateScratch: (params: { playerId: PlayerId, amount: number }) => void;
-  increment: (params: { amount: number }) => void;
+  // resetLastScratcher: () => void;
 }
 
 declare global {
@@ -41,14 +42,12 @@ Rune.initLogic({
     scratched: false,
     lastMovePlayerId: null,
     playerIds: allPlayerIds,
-    count: 0,
     scratches: Object.fromEntries(allPlayerIds.map(id => [id, 0])),
     catHappiness: 205,
+    lastScratcher: null,
+    lastScratchTime: null,
   }),
   actions: {
-    increment: ({ amount }, { game }) => {
-      game.count += amount;
-    },
     updateScore: ({ playerId, amount }, { game }) => {
       if (!game.playerIds.includes(playerId)) {
         throw Rune.invalidAction();
@@ -59,7 +58,7 @@ Rune.initLogic({
       }
 
       game.scores[playerId] += amount;
-      game.catHappiness += amount; // Increase cat happiness with score updates
+      game.catHappiness += amount; 
 
       if (isGameOver(game)) {
         finalizeScores(game);
@@ -78,7 +77,9 @@ Rune.initLogic({
       }
 
       game.scratches[playerId] += amount;
-      game.catHappiness -= amount * 50; // Decrease cat happiness with scratches
+      game.catHappiness -= amount * 50; 
+      game.lastScratcher = playerId; 
+      game.lastScratchTime = Rune.gameTime();
 
       if (isGameOver(game)) {
         finalizeScores(game);
@@ -86,10 +87,14 @@ Rune.initLogic({
           players: Object.fromEntries(game.playerIds.map(id => [id, game.scores[id]]))
         });
       }
-    }
+    },
   },
   update: ({ game }) => {
     game.catHappiness -= 1; // Decrease cat happiness every second
+    if (game.lastScratchTime !== null && Rune.gameTime() - game.lastScratchTime > 500) {
+      game.lastScratcher = null;
+      game.lastScratchTime = null;
+    }
 
     if (isGameOver(game)) {
       finalizeScores(game);

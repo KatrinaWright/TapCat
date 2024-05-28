@@ -23,13 +23,14 @@ const PlayerList: React.FC<PlayerListProps> = ({ playerIds, game, yourPlayerId, 
         return (
           <div
             key={playerId}
-            className={`player-card ${playerId === yourPlayerId ? 'current-player' : ''}`}
+            className={`player-card ${playerId === yourPlayerId ? 'current-player' : ''} ${playerId === game.lastScratcher ? 'flash-red' : ''}`}
             data-player={index.toString()}
           >
-            <div className="player-name">
-              {player.displayName}
-            </div>
             <div className="player-info">
+              <span className="player-name">
+                {player.displayName}
+              </span>
+            </div>
               <div className="player-stats">
                 <div className="stat">
                   {game.scores[playerId]}
@@ -41,7 +42,6 @@ const PlayerList: React.FC<PlayerListProps> = ({ playerIds, game, yourPlayerId, 
                 </div>
               </div>
             </div>
-          </div>
         );
       })}
     </div>
