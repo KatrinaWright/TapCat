@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { PlayerId } from "rune-games-sdk/multiplayer";
-
 import catHappyPurr from "./assets/purring-cat-156459.mp3"
 import catMadSound from "./assets/sat-on-the-cat-95941.mp3"
 import { GameState } from "./logic";
 import PettingZones from "./Components/PettingZones";
 import PlayerList from "./Components/PlayerList";
 import CatHappinessBar from "./Components/CatHappinessBar";
+import IdleAnimationOverlay from "./Components/IdleAnimationOverlay";
 import picture from "../src/assets/Cat Saying Hello.gif";
 import mapData from './mapData.json';
 
@@ -17,7 +17,7 @@ const purrSound = new Audio(catHappyPurr);
 function App() {
   const [game, setGame] = useState<GameState>();
   const [yourPlayerId, setYourPlayerId] = useState<PlayerId | undefined>();
-  
+  const [resetTimer, setResetTimer] = useState(false);
 
   useEffect(() => {
     Rune.initClient({
@@ -40,8 +40,14 @@ function App() {
 
   const { playerIds, scratches, catHappiness } = game;
 
+  const handleUserInteraction = () => {
+    setResetTimer(true);
+    setTimeout(() => setResetTimer(false), 100);
+  };
+
   return (
-    <>
+    
+    <div onMouseMove={handleUserInteraction} onTouchMove={handleUserInteraction}>
       <CatHappinessBar catHappiness={catHappiness} />
       <img src={picture} useMap="#image-map" alt="Petting Zones Map" />
       {yourPlayerId && (
@@ -52,7 +58,8 @@ function App() {
         />
       )}
       <PlayerList playerIds={playerIds} game={game} yourPlayerId={yourPlayerId} scratches={scratches} />
-    </>
+      <IdleAnimationOverlay resetTimer={resetTimer} />
+    </div>
   );
 }
 
