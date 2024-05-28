@@ -7,8 +7,8 @@ import PettingZones from "./Components/PettingZones";
 import PlayerList from "./Components/PlayerList";
 import CatHappinessBar from "./Components/CatHappinessBar";
 import IdleAnimationOverlay from "./Components/IdleAnimationOverlay";
-import picture from "../src/assets/Cat Saying Hello.gif";
-import mapData from './mapData.json';
+import picture from "../src/Cat Maps/CatSayingHello.gif";
+import mapData from '../src/Cat Maps/CatSayingHellomapData.json';
 
 //const selectSound = new Audio(selectSoundAudio);
 const MadSound = new Audio(catMadSound);
