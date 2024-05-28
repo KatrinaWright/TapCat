@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef  } from "react";
 import { PlayerId } from "rune-games-sdk/multiplayer";
 import catHappyPurr from "./assets/purring-cat-156459.mp3"
 import catMadSound from "./assets/sat-on-the-cat-95941.mp3"
@@ -17,7 +17,13 @@ const purrSound = new Audio(catHappyPurr);
 function App() {
   const [game, setGame] = useState<GameState>();
   const [yourPlayerId, setYourPlayerId] = useState<PlayerId | undefined>();
-  const [resetTimer, setResetTimer] = useState(false);
+  const [idle, setIdle] = useState(false);
+  const lastInteractionTimeRef = useRef<number>(Date.now());
+
+  const handleInteraction = () => {
+    lastInteractionTimeRef.current = Date.now();
+    setIdle(false);
+  };
 
   useEffect(() => {
     Rune.initClient({
@@ -31,7 +37,16 @@ function App() {
         
       },
     });
-  }, []);
+
+    const interval = setInterval(() => {
+      const currentTime = Date.now();
+      if (currentTime - lastInteractionTimeRef.current > 15000) {
+        setIdle(true);
+      }
+    }, 1000);
+
+    return () => clearInterval(interval);
+    }, []);
 
   if (!game) {
     // Rune only shows your game after an onChange() so no need for loading screen
@@ -40,14 +55,8 @@ function App() {
 
   const { playerIds, scratches, catHappiness } = game;
 
-  const handleUserInteraction = () => {
-    setResetTimer(true);
-    setTimeout(() => setResetTimer(false), 100);
-  };
-
-  return (
-    
-    <div onMouseMove={handleUserInteraction} onTouchMove={handleUserInteraction}>
+  return (   
+    <div onMouseMove={handleInteraction} onTouchMove={handleInteraction}>
       <CatHappinessBar catHappiness={catHappiness} />
       <img src={picture} useMap="#image-map" alt="Petting Zones Map" />
       {yourPlayerId && (
@@ -58,7 +67,7 @@ function App() {
         />
       )}
       <PlayerList playerIds={playerIds} game={game} yourPlayerId={yourPlayerId} scratches={scratches} />
-      <IdleAnimationOverlay resetTimer={resetTimer} />
+      {yourPlayerId && <IdleAnimationOverlay idle={idle} />}
     </div>
   );
 }
