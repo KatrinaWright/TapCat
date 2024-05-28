@@ -21,6 +21,7 @@ function App() {
   const [yourPlayerId, setYourPlayerId] = useState<PlayerId | undefined>();
   const [idle, setIdle] = useState(false);
   const lastInteractionTimeRef = useRef<number>(Date.now());
+  const [catId, setCatId] = useState(false);
 
   const handleInteraction = () => {
     lastInteractionTimeRef.current = Date.now();
@@ -31,6 +32,7 @@ function App() {
     Rune.initClient({
       onChange: ({ game, action, yourPlayerId }) => {
         setGame(game);
+        setCatId(!catId);
         setYourPlayerId(yourPlayerId);
 
         if (action && action.name === "updateScratch") MadSound.play();
@@ -47,7 +49,7 @@ function App() {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [catId]); // Had to add this as a dependency to trigger the game to finish after updating the useEffect to include "setCatId(!catId);" {DKF}
 
   if (!game) {
     // Rune only shows your game after an onChange() so no need for loading screen
@@ -56,14 +58,18 @@ function App() {
 
   const { playerIds, scratches, catHappiness } = game;
 
+  // It looks like the useEffect is only triggered by the initial load and not subsequent games, beacuse this always defaults to the yarn version (when setting the initial useState to "True", and vice versa) {DKF}
+  const picture = catId ? pictureHello : pictureYarn;
+  const mapData = catId ? mapDataHello : mapDataYarn;
+
   return (
     <div onMouseMove={handleInteraction} onTouchMove={handleInteraction}>
       <CatHappinessBar catHappiness={catHappiness} />
-      <img src={pictureHello} useMap="#image-map" alt="Petting Zones Map" />
+      <img src={picture} useMap="#image-map" alt="Petting Zones Map" />
       {yourPlayerId && (
         <PettingZones
           imageName="image-map"
-          mapData={mapDataHello}
+          mapData={mapData}
           playerId={yourPlayerId}
         />
       )}
