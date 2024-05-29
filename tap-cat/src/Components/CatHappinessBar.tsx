@@ -8,7 +8,7 @@ interface CatHappinessBarProps {
 }
 
 const CatHappinessBar: React.FC<CatHappinessBarProps> = ({ catHappiness }) => {
-  const happinessPercentage = Math.round((catHappiness / 2000) * 100);
+  const happinessPercentage = Math.round((catHappiness / 1000) * 100);
 
   const getColorClass = (percentage: number) => {
     if (percentage < 10) return 'red low-percentage';
