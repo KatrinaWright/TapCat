@@ -23,7 +23,7 @@ declare global {
 
 const isGameOver = (game: GameState): boolean => {
   // Game over if catHappiness reaches 2000 or drops to 0
-  return game.catHappiness >= 2000 || game.catHappiness <= 0;
+  return game.catHappiness >= 1000 || game.catHappiness <= 0;
 }
 
 const finalizeScores = (game: GameState) => {
