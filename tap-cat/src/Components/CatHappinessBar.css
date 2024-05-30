@@ -48,6 +48,37 @@
   background-color: rgb(223, 6, 223);
 }
 
+/* New color classes for gradient transition */
+.red-to-orange {
+  background: linear-gradient(45deg, red, orange);
+  transition: background 1s ease-in-out;
+}
+
+.orange-to-yellow {
+  background: linear-gradient(45deg, orange, yellow);
+  transition: background 1s ease-in-out;
+}
+
+.yellow-to-green {
+  background: linear-gradient(45deg, yellow, green);
+  transition: background 1s ease-in-out;
+}
+
+.green-to-blue {
+  background: linear-gradient(45deg, green, blue);
+  transition: background 1s ease-in-out;
+}
+
+.blue-to-purple {
+  background: linear-gradient(45deg, blue, purple);
+  transition: background 1s ease-in-out;
+}
+
+.purple-to-red {
+  background: linear-gradient(45deg, purple, red);
+  transition: background 1s ease-in-out;
+}
+
 .happiness-text {
   position: absolute;
   width: 100%;
@@ -67,6 +98,7 @@
   .cat-happiness-bar {
     width: 100%; /* Make sure it takes full width on smaller screens */
     height: 25px; /* Adjust height for smaller screens */
+    
   }
 
   .icon {
