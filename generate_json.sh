@@ -12,7 +12,24 @@ parse_file_to_json() {
   input_file="$1"
 
   # Extract data from the input file
-  data=$(awk -F'[<>]' '/area/{gsub(/ /, ",", $3); print "{\""title"\": \""$2"\", \""rating"\": "$4", \""coords"\": \""$3"\", \""shape"\": \""$6"\"}" }' "$input_file")
+  data=$(while IFS= read -r line; do
+    if [[ $line == *"<area"* ]]; then
+        title=$(echo $line | grep -oP 'title="\K[^"]+')
+        rating=$(echo $line | grep -oP 'href="\K[^"]+')
+        coords=$(echo $line | grep -oP 'coords="\K[^"]+')
+        shape=$(echo $line | grep -oP 'shape="\K[^"]+')
+
+        # Create a JSON object for each area
+        cat <<EOL >> "$OUTPUT_FILE"
+    {
+        "title": "$title",
+        "rating": $rating,
+        "coords": "$coords",
+        "shape": "$shape"
+    },
+EOL
+    fi
+done < "$INPUT_FILE")
 
   # Wrap the extracted data with square brackets to form a valid JSON array
   printf "[$data]\n"
@@ -33,7 +50,7 @@ main() {
   mkdir -p "$map_dir"
 
   # Generate the JSON file
-  json_file="$map_dir/CatSayingHellomapData.json"
+  json_file="$map_dir/CatSayingHellomapDataB.json"
   parse_file_to_json "$input_file" > "$json_file"
   echo "JSON data successfully written to: $json_file"  
 }

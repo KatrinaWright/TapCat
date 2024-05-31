@@ -7,25 +7,32 @@ if [ -d "tap-cat" ]; then
   output_file="$PWD/tap-cat/src/Cat Maps/CatSayingHellomapDataA.json"
 
   # Create an empty array to store the JSON objects
-  json_array=()
+  mkdir -p "$(dirname "$output_file")"
+  echo "[" > "$output_file"
 
   # Extract the relevant data from the input file
-  while IFS= read -r line
-  do
-    if [[ $line == *"alt="* ]]; then
-      title=$(cut -d'"' -f4 <<< "$line")
-    elif [[ $line == *"href="* ]]; then
-      rating=$(cut -d'"' -f4 <<< "$line")
-    elif [[ $line == *"coords="* ]]; then
-      coords=$(cut -d'"' -f4 <<< "$line")
-      shape=$(cut -d'"' -f6 <<< "$line")
-      json_object="{\"title\": \"$title\", \"rating\": $rating, \"coords\": \"$coords\", \"shape\": \"$shape\"}"
-      json_array+=("$json_object")
+  while IFS= read -r line; do
+    if [[ $line == *"<area"* ]]; then
+        title=$(echo $line | grep -oP 'title="\K[^"]+')
+        rating=$(echo $line | grep -oP 'href="\K[^"]+')
+        coords=$(echo $line | grep -oP 'coords="\K[^"]+')
+        shape=$(echo $line | grep -oP 'shape="\K[^"]+')
+
+        # Create a JSON object for each area
+        cat <<EOL >> "$output_file"
+    {
+        "title": "$title",
+        "rating": $rating,
+        "coords": "$coords",
+        "shape": "$shape"
+    },
+EOL
     fi
   done < "$input_file"
 
   # Create the JSON file with the data 
-  printf "{\"data\": [%s]}" "$(printf '%s,\n' "${json_array[@]}")" | sed 's/,\n$/\n/g' > "$output_file"
+sed -i '$ s/,$//' "$output_file"
+echo "]" >> "$output_file"
   echo "JSON file created successfully at: $output_file"
 else
   echo "Error: tap-cat folder not found. Please make sure the script is placed at the correct location."
