@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 
-// Define the structure of the JSON data
 interface AreaData {
   title: string;
   rating: number;
@@ -16,26 +15,70 @@ interface PettingZonesProps {
 
 const PettingZones: React.FC<PettingZonesProps> = ({ imageName, mapData, playerId }) => {
   const [activeZone, setActiveZone] = useState<string | null>(null);
+  const [zoneActivationCounts, setZoneActivationCounts] = useState<{ [key: string]: number }>({});
   const actionQueue = useRef<{ playerId: string; amount: number }[]>([]);
   const lastActionTime = useRef<number>(0);
 
+  // const rollDiceForZone = useCallback((zoneObject: AreaData) => {
+  //   const diceRoll = Math.floor(Math.random() * zoneObject.rating) + 1;
+  //   console.log(`Rolled a ${diceRoll} out of ${zoneObject.rating} for ${zoneObject.title}`);
+
+  //   let amount;
+  //   if (diceRoll === 1) {
+  //     amount = -100;
+  //     Rune.actions.updateScratch({ playerId, amount: 1 });
+  //     console.log(`Player got scratched! ${playerId}`);
+
+  //     // Calculate the probability of rolling a 1
+  //     const probability = 1 / zoneObject.rating;
+
+  //     // Increment the activation count for this zone
+  //     const currentCount = (zoneActivationCounts[zoneObject.title] || 0) + 1;
+  //     setZoneActivationCounts(prevCounts => ({
+  //       ...prevCounts,
+  //       [zoneObject.title]: currentCount
+  //     }));
+
+  //     // Log the message
+  //     console.log(`The chance of rolling a 1 was ${probability}. This zone has been activated ${currentCount} times before a 1 was rolled.`);
+
+  //   } else {
+  //     amount = Math.ceil(100 / zoneObject.rating);
+  //   }
+
+  //   // Add the action to the queue
+  //   actionQueue.current.push({ playerId, amount });
+  // }, [playerId, zoneActivationCounts]);
   const rollDiceForZone = useCallback((zoneObject: AreaData) => {
+    // Increment the activation count for this zone
+    const currentCount = (zoneActivationCounts[zoneObject.title] || 0) + 1;
+    setZoneActivationCounts(prevCounts => ({
+      ...prevCounts,
+      [zoneObject.title]: currentCount
+    }));
+  
     const diceRoll = Math.floor(Math.random() * zoneObject.rating) + 1;
     console.log(`Rolled a ${diceRoll} out of ${zoneObject.rating} for ${zoneObject.title}`);
-
+  
     let amount;
     if (diceRoll === 1) {
       amount = -100;
       Rune.actions.updateScratch({ playerId, amount: 1 });
       console.log(`Player got scratched! ${playerId}`);
-
+  
+      // Calculate the probability of rolling a 1
+      const probability = 1 / zoneObject.rating;
+  
+      // Log the message
+      console.log(`The chance of rolling a 1 was ${probability}. This zone has been activated ${currentCount} times before a 1 was rolled.`);
+  
     } else {
       amount = Math.ceil(100 / zoneObject.rating);
     }
-
+  
     // Add the action to the queue
     actionQueue.current.push({ playerId, amount });
-  }, [playerId]);
+  }, [playerId, zoneActivationCounts]);
 
   const handlePointerDown = useCallback((zone: string) => {
     console.log(`Pointer down in ${zone}`);
