@@ -4,10 +4,11 @@
   min-height: 100vh;
   position: relative;
   overflow: hidden;
+  padding: 15px;
 }
 
-/* Cat happiness bar enhancements */
-.cat-happiness-bar {
+/* Cat happiness bar enhancements - preserving original classes */
+.cat-happiness-container {
   background: rgba(255, 255, 255, 0.2);
   border-radius: 25px;
   padding: 10px;
@@ -16,25 +17,142 @@
   border: 1px solid rgba(255, 255, 255, 0.3);
   margin: 20px;
   transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
 }
 
-.cat-happiness-bar:hover {
+.cat-happiness-container:hover {
   transform: translateY(-2px);
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
 }
 
-/* Player card styling with dynamic glows */
+.cat-happiness-bar {
+  flex: 1;
+  height: 30px;
+  background-color: #e0e0e0;
+  border-radius: 15px;
+  overflow: hidden;
+  position: relative;
+}
+
+.cat-happiness-fill {
+  height: 100%;
+  border-radius: 15px;
+  transition: width 0.5s ease, background-color 0.3s ease;
+  position: relative;
+}
+
+.cat-happiness-fill.red {
+  background-color: #ff5252;
+}
+.cat-happiness-fill.orange {
+  background-color: #ff9800;
+}
+.cat-happiness-fill.yellow {
+  background-color: #ffeb3b;
+}
+.cat-happiness-fill.green {
+  background-color: #4caf50;
+}
+.cat-happiness-fill.blue {
+  background-color: #2196f3;
+}
+.cat-happiness-fill.purple {
+  background-color: #9c27b0;
+}
+
+.happiness-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+  font-weight: bold;
+}
+
+.side-image {
+  width: 40px;
+  height: 40px;
+  margin: 0 10px;
+}
+
+/* Player card styling preserving original classes */
+.player-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
 .player-card {
   background: rgba(255, 255, 255, 0.15);
   border-radius: 15px;
   padding: 15px;
-  margin: 10px;
+  min-width: 180px;
   backdrop-filter: blur(10px);
   border: 2px solid transparent;
   transition: all 0.4s ease;
   position: relative;
   overflow: visible;
 }
+
+.player-card.current-player {
+  background: rgba(255, 255, 255, 0.25);
+  border: 2px solid rgba(255, 255, 255, 0.5);
+}
+
+.player-name {
+  font-weight: bold;
+  font-size: 1.1em;
+  color: white;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.player-stats {
+  display: flex;
+  justify-content: space-around;
+}
+
+.stat {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: white;
+  font-size: 0.9em;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+}
+
+.flash-red {
+  animation: flashRed 1s ease-in-out;
+}
+
+@keyframes flashRed {
+  0%, 100% { background: rgba(255, 255, 255, 0.15); }
+  50% { background: rgba(255, 0, 0, 0.3); }
+}
+
+.performance-indicator {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  font-size: 1.5em;
+  filter: drop-shadow(2px 2px 3px rgba(0, 0, 0, 0.3));
+}
+
+/* Petting zone effects */
+.petting-zone {
+  transition: all 0.2s ease;
+  border-radius: 50%;
+}
+
+/* Add new animation classes */
 
 /* Glow effects based on performance */
 .player-card.top-performer {
@@ -60,11 +178,6 @@
     0 0 10px rgba(135, 206, 235, 0.4),
     0 0 20px rgba(135, 206, 235, 0.2);
   animation: blueGlow 3s ease-in-out infinite alternate;
-}
-
-.player-card.low-performer {
-  border-color: rgba(255, 255, 255, 0.3);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 /* Glow animations */
@@ -209,12 +322,6 @@
   }
 }
 
-/* Petting zone effects */
-.petting-zone {
-  transition: all 0.2s ease;
-  border-radius: 50%;
-}
-
 .petting-zone:hover {
   background: rgba(255, 255, 255, 0.1);
   box-shadow: 0 0 15px rgba(255, 105, 180, 0.6);
@@ -239,47 +346,6 @@
   }
 }
 
-/* Idle animation overlay enhancements */
-.idle-overlay {
-  background: rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(5px);
-  transition: all 0.5s ease;
-}
-
-.idle-message {
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: 20px;
-  padding: 30px;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-  animation: gentlePulse 3s ease-in-out infinite;
-}
-
-@keyframes gentlePulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.02); }
-}
-
-/* Responsive design for smaller screens */
-@media (max-width: 768px) {
-  .floating-heart {
-    font-size: 20px;
-  }
-  
-  .floating-heart.large {
-    font-size: 26px;
-  }
-  
-  .player-card {
-    margin: 5px;
-    padding: 10px;
-  }
-  
-  .happiness-celebration {
-    font-size: 36px;
-  }
-}
-
-/* Special milestone celebrations */
 .milestone-reached {
   animation: milestoneReached 1s ease-out;
 }
@@ -316,6 +382,7 @@
   border-radius: 50%;
   animation: loveParticle 2s ease-out forwards;
   pointer-events: none;
+  z-index: 900;
 }
 
 @keyframes loveParticle {

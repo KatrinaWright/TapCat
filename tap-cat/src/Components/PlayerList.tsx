@@ -1,48 +1,97 @@
-import React from 'react';
-import { getPlayerPerformanceLevel } from '../animationHelpers';
+import React, { useEffect, useState, useRef } from 'react';
+import { PlayerId } from "rune-games-sdk/multiplayer";
+import scratchIcon from '../assets/lion.svg'; 
+import pointsIcon from '../assets/heart-eyes-cat.svg'; 
+import { GameState } from '../logic';
+import './PlayerList.css'; 
+import { getPlayerPerformanceLevel, createFloatingHeart } from '../animationHelpers';
 
-const PlayerList = ({ playerIds, game, yourPlayerId, scratches }) => {
-  // Calculate all player scores for ranking
-  const playerScores = playerIds.map(playerId => {
-    // You'll need to adjust this based on how you calculate player scores
-    // This assumes you have a way to get each player's score
-    return game.playerScores?.[playerId] || 0;
-  });
+interface PlayerListProps {
+  playerIds: PlayerId[];
+  game: GameState;
+  yourPlayerId: PlayerId | undefined;
+  scratches: { [key: string]: number };
+}
+
+const PlayerList: React.FC<PlayerListProps> = ({ playerIds, game, yourPlayerId, scratches }) => {
+  const [lastScores, setLastScores] = useState<{ [key: string]: number }>({});
+  const cardsRef = useRef<{ [key: string]: HTMLDivElement | null }>({});
+  
+  const sortedPlayerIds = yourPlayerId 
+    ? [yourPlayerId, ...playerIds.filter(id => id !== yourPlayerId)] 
+    : playerIds;
+  
+  // Collect all player scores for performance level calculation
+  const allScores = sortedPlayerIds.map(id => game.scores[id] || 0);
+
+  // Check for score changes and add animations
+  useEffect(() => {
+    sortedPlayerIds.forEach(playerId => {
+      const currentScore = game.scores[playerId] || 0;
+      const previousScore = lastScores[playerId] || 0;
+      
+      if (currentScore > previousScore) {
+        // Player earned points - show animation
+        const cardElement = cardsRef.current[playerId];
+        if (cardElement) {
+          cardElement.classList.add('earning-points');
+          
+          // Create floating heart from player card
+          const rect = cardElement.getBoundingClientRect();
+          createFloatingHeart(
+            rect.left + rect.width / 2, 
+            rect.top, 
+            'small'
+          );
+          
+          setTimeout(() => {
+            cardElement.classList.remove('earning-points');
+          }, 600);
+        }
+      }
+    });
+    
+    setLastScores({ ...game.scores });
+  }, [game.scores, sortedPlayerIds]);
 
   return (
     <div className="player-list">
-      {playerIds.map((playerId, index) => {
-        const playerScore = playerScores[index];
-        const performanceLevel = getPlayerPerformanceLevel(playerScore, playerScores);
+      {sortedPlayerIds.map((playerId, index) => {
+        const player = Rune.getPlayerInfo(playerId);
+        const score = game.scores[playerId] || 0;
+        const performanceLevel = getPlayerPerformanceLevel(score, allScores);
         const isCurrentPlayer = playerId === yourPlayerId;
-        
+
         return (
           <div
             key={playerId}
+            ref={el => cardsRef.current[playerId] = el}
+            className={`player-card ${playerId === yourPlayerId ? 'current-player' : ''} 
+                      ${playerId === game.lastScratcher ? 'flash-red' : ''} 
+                      ${performanceLevel}`}
+            data-player={index.toString()}
             data-player-id={playerId}
-            className={`player-card ${performanceLevel} ${isCurrentPlayer ? 'current-player' : ''}`}
           >
             <div className="player-info">
-              <h3 className="player-name">
-                {isCurrentPlayer ? 'You' : `Player ${playerId.slice(-4)}`}
+              <span className="player-name">
+                {player.displayName}
                 {performanceLevel === 'top-performer' && ' 👑'}
-                {performanceLevel === 'high-performer' && ' ⭐'}
-              </h3>
-              
-              <div className="player-stats">
-                <span className="score">Score: {playerScore}</span>
-                <span className="scratches">
-                  Scratches: {scratches[playerId] || 0} 
-                  {(scratches[playerId] || 0) > 0 && ' 😾'}
-                </span>
+              </span>
+            </div>
+            <div className="player-stats">
+              <div className="stat">
+                {game.scores[playerId] || 0}
+                <img src={pointsIcon} alt="points icon" className="icon" />
               </div>
-              
-              <div className="performance-indicator">
-                {performanceLevel === 'top-performer' && '🥇 Leading with Love!'}
-                {performanceLevel === 'high-performer' && '🥈 Spreading Joy!'}
-                {performanceLevel === 'medium-performer' && '🥉 Good Petting!'}
-                {performanceLevel === 'low-performer' && '💝 Keep Trying!'}
+              <div className="stat">
+                {scratches[playerId] || 0}
+                <img src={scratchIcon} alt="scratch icon" className="icon" />
               </div>
+            </div>
+            <div className="performance-indicator">
+              {performanceLevel === 'top-performer' && '🥇'}
+              {performanceLevel === 'high-performer' && '🥈'}
+              {performanceLevel === 'medium-performer' && '🥉'}
             </div>
           </div>
         );
