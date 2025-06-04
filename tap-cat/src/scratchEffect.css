@@ -1,0 +1,225 @@
+/* Dramatic scratch effect */
+.scratch-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1500;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.scratch-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.scratch-mark {
+  position: absolute;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 300 300'%3E%3Cpath d='M50,50 L250,250 M60,50 L260,250 M40,50 L240,250' stroke='%23ff0000' stroke-width='8' stroke-linecap='round'/%3E%3Cpath d='M250,50 L50,250 M240,50 L40,250 M260,50 L60,250' stroke='%23ff0000' stroke-width='8' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 300px;
+  height: 300px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.1);
+  opacity: 0;
+  filter: drop-shadow(0 0 10px rgba(255, 0, 0, 0.8));
+}
+
+.scratch-overlay.active .scratch-mark {
+  animation: scratchAppear 0.8s ease-out forwards;
+}
+
+@keyframes scratchAppear {
+  0% {
+    transform: translate(-50%, -50%) scale(0.1) rotate(-20deg);
+    opacity: 0;
+  }
+  30% {
+    transform: translate(-50%, -50%) scale(1.2) rotate(0deg);
+    opacity: 1;
+  }
+  80% {
+    transform: translate(-50%, -50%) scale(1) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1) rotate(0deg);
+    opacity: 0;
+  }
+}
+
+/* Red flash effect for the whole screen */
+.red-flash {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 0, 0, 0.3);
+  pointer-events: none;
+  z-index: 1400;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.red-flash.active {
+  animation: redFlashEffect 0.8s ease-out forwards;
+}
+
+@keyframes redFlashEffect {
+  0% {
+    opacity: 0;
+    visibility: visible;
+  }
+  20% {
+    opacity: 1;
+    visibility: visible;
+  }
+  80% {
+    opacity: 0.4;
+    visibility: visible;
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+/* Shake effect for cat image */
+.shake-effect {
+  animation: shakeEffect 0.5s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+@keyframes shakeEffect {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-10px);
+  }
+  20%, 40%, 60%, 80% {
+    transform: translateX(10px);
+  }
+}
+
+/* Blood spatter particles for dramatic effect */
+.blood-particle {
+  position: absolute;
+  background-color: #ff0000;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 1450;
+  opacity: 0.8;
+}
+
+.blood-particle.small {
+  width: 5px;
+  height: 5px;
+}
+
+.blood-particle.medium {
+  width: 8px;
+  height: 8px;
+}
+
+.blood-particle.large {
+  width: 12px;
+  height: 12px;
+}
+
+@keyframes bloodSpatter {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate(var(--random-x, 50px), var(--random-y, 50px)) scale(0.3);
+    opacity: 0;
+  }
+}
+
+/* Angry cat eyes */
+.angry-eyes {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  width: 200px;
+  height: 100px;
+  pointer-events: none;
+  z-index: 1600;
+  opacity: 0;
+}
+
+.angry-eyes.active {
+  animation: angryEyesAppear 1s ease-out forwards;
+}
+
+.angry-eye {
+  position: absolute;
+  width: 80px;
+  height: 40px;
+  background-color: #ffffcc;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.angry-eye:before {
+  content: '';
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background-color: #000;
+  border-radius: 50%;
+  top: 5px;
+  animation: angryPupil 0.6s ease-in-out infinite alternate;
+}
+
+.angry-eye-left {
+  left: 0;
+}
+
+.angry-eye-right {
+  right: 0;
+}
+
+.angry-eye-left:before {
+  right: 10px;
+}
+
+.angry-eye-right:before {
+  left: 10px;
+}
+
+@keyframes angryEyesAppear {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.2);
+    opacity: 1;
+  }
+  70% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+  }
+}
+
+@keyframes angryPupil {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(0.7);
+  }
+}

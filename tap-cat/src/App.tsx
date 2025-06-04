@@ -10,7 +10,9 @@ import IdleAnimationOverlay from "./Components/IdleAnimationOverlay";
 import picture from "../src/Cat Maps/CatSayingHello.gif";
 import mapData from '../src/Cat Maps/CatSayingHellomapData.json';
 import { createLoveParticles } from './animationHelpers';
+import { createDramaticScratchEffect } from './scratchEffectHelpers';
 import './animations.css';
+import './scratchEffect.css'; // Add this new CSS file
 
 const MadSound = new Audio(catMadSound);
 const purrSound = new Audio(catHappyPurr);
@@ -19,7 +21,9 @@ function App() {
   const [game, setGame] = useState<GameState>();
   const [yourPlayerId, setYourPlayerId] = useState<PlayerId | undefined>();
   const [idle, setIdle] = useState(false);
+  const [lastScratcher, setLastScratcher] = useState<PlayerId | null>(null);
   const lastInteractionTimeRef = useRef<number>(Date.now());
+  const catImageRef = useRef<HTMLImageElement>(null);
 
   const handleInteraction = (event: React.MouseEvent | React.TouchEvent) => {
     lastInteractionTimeRef.current = Date.now();
@@ -36,12 +40,37 @@ function App() {
   useEffect(() => {
     Rune.initClient({
       onChange: ({ game, action, yourPlayerId }) => {
+        const previousGame = game !== undefined ? game : null;
         setGame(game);
         setYourPlayerId(yourPlayerId);
 
         // Handle sound effects
-        if (action && action.name === "updateScratch") MadSound.play();
-        if (action && action.name === "updateScore" && game.catHappiness > 750) purrSound.play();
+        if (action && action.name === "updateScratch") {
+          MadSound.play();
+          
+          // If scratch action happened and we're not already showing a scratch effect
+          if (game.lastScratcher !== lastScratcher) {
+            setLastScratcher(game.lastScratcher);
+            
+            // Get cat image position for dramatic effect
+            const catImage = catImageRef.current;
+            if (catImage) {
+              const rect = catImage.getBoundingClientRect();
+              const centerX = rect.left + rect.width / 2;
+              const centerY = rect.top + rect.height / 2;
+              
+              // Create dramatic scratch effect
+              createDramaticScratchEffect(centerX, centerY);
+            } else {
+              // Fallback to center of screen
+              createDramaticScratchEffect();
+            }
+          }
+        }
+        
+        if (action && action.name === "updateScore" && game.catHappiness > 750) {
+          purrSound.play();
+        }
       },
     });
 
@@ -53,7 +82,7 @@ function App() {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [lastScratcher]);
 
   if (!game) {
     // Rune only shows your game after an onChange() so no need for loading screen
@@ -69,7 +98,13 @@ function App() {
       onTouchMove={handleInteraction}
     >
       <CatHappinessBar catHappiness={catHappiness} />
-      <img src={picture} useMap="#image-map" alt="Petting Zones Map" />
+      <img 
+        ref={catImageRef}
+        src={picture} 
+        useMap="#image-map" 
+        alt="Petting Zones Map" 
+        className={game.lastScratcher ? 'shake-effect' : ''}
+      />
       {yourPlayerId && (
         <PettingZones
           imageName="image-map"

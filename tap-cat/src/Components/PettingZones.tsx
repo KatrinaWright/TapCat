@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { createFloatingHeart, createLoveParticles, triggerPettingEffect } from '../animationHelpers';
+import { createDramaticScratchEffect } from '../scratchEffectHelpers';
 
 // Define the structure of the JSON data
 interface AreaData {
@@ -27,12 +28,14 @@ const PettingZones: React.FC<PettingZonesProps> = ({ imageName, mapData, playerI
 
     let amount;
     if (diceRoll === 1) {
+      // SCRATCH OUTCOME! Show dramatic effect
       amount = -100;
       Rune.actions.updateScratch({ playerId, amount: 1 });
       console.log(`Player got scratched! ${playerId}`);
       
-      // Create angry particles
-      createLoveParticles(x, y, 8);
+      // Trigger dramatic scratch effect
+      createDramaticScratchEffect(x, y);
+      
     } else {
       amount = Math.ceil(100 / zoneObject.rating);
       
