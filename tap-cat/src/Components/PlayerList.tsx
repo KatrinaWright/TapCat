@@ -1,47 +1,50 @@
 import React from 'react';
-import { PlayerId } from "rune-games-sdk/multiplayer";
-import scratchIcon from '../assets/lion.svg'; 
-import pointsIcon from '../assets/heart-eyes-cat.svg'; 
-import { GameState } from '../logic';
-import './PlayerList.css'; 
+import { getPlayerPerformanceLevel } from '../animationHelpers';
 
-interface PlayerListProps {
-  playerIds: PlayerId[];
-  game: GameState;
-  yourPlayerId: PlayerId | undefined;
-  scratches: { [key: string]: number };
-}
-
-const PlayerList: React.FC<PlayerListProps> = ({ playerIds, game, yourPlayerId, scratches }) => {
-  const sortedPlayerIds = yourPlayerId ? [yourPlayerId, ...playerIds.filter(id => id !== yourPlayerId)] : playerIds;
+const PlayerList = ({ playerIds, game, yourPlayerId, scratches }) => {
+  // Calculate all player scores for ranking
+  const playerScores = playerIds.map(playerId => {
+    // You'll need to adjust this based on how you calculate player scores
+    // This assumes you have a way to get each player's score
+    return game.playerScores?.[playerId] || 0;
+  });
 
   return (
     <div className="player-list">
-      {sortedPlayerIds.map((playerId, index) => {
-        const player = Rune.getPlayerInfo(playerId);
-
+      {playerIds.map((playerId, index) => {
+        const playerScore = playerScores[index];
+        const performanceLevel = getPlayerPerformanceLevel(playerScore, playerScores);
+        const isCurrentPlayer = playerId === yourPlayerId;
+        
         return (
           <div
             key={playerId}
-            className={`player-card ${playerId === yourPlayerId ? 'current-player' : ''} ${playerId === game.lastScratcher ? 'flash-red' : ''}`}
-            data-player={index.toString()}
+            data-player-id={playerId}
+            className={`player-card ${performanceLevel} ${isCurrentPlayer ? 'current-player' : ''}`}
           >
             <div className="player-info">
-              <span className="player-name">
-                {player.displayName}
-              </span>
-            </div>
+              <h3 className="player-name">
+                {isCurrentPlayer ? 'You' : `Player ${playerId.slice(-4)}`}
+                {performanceLevel === 'top-performer' && ' 👑'}
+                {performanceLevel === 'high-performer' && ' ⭐'}
+              </h3>
+              
               <div className="player-stats">
-                <div className="stat">
-                  {game.scores[playerId]}
-                  <img src={pointsIcon} alt="points icon" className="icon" />
-                </div>
-                <div className="stat">
-                  {scratches[playerId]}
-                  <img src={scratchIcon} alt="scratch icon" className="icon" />
-                </div>
+                <span className="score">Score: {playerScore}</span>
+                <span className="scratches">
+                  Scratches: {scratches[playerId] || 0} 
+                  {(scratches[playerId] || 0) > 0 && ' 😾'}
+                </span>
+              </div>
+              
+              <div className="performance-indicator">
+                {performanceLevel === 'top-performer' && '🥇 Leading with Love!'}
+                {performanceLevel === 'high-performer' && '🥈 Spreading Joy!'}
+                {performanceLevel === 'medium-performer' && '🥉 Good Petting!'}
+                {performanceLevel === 'low-performer' && '💝 Keep Trying!'}
               </div>
             </div>
+          </div>
         );
       })}
     </div>
