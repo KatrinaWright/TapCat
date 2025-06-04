@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { createFloatingHeart, createLoveParticles, triggerPettingEffect } from '../animationHelpers.js';
 
 // Define the structure of the JSON data
 interface AreaData {
@@ -31,15 +32,41 @@ const PettingZones: React.FC<PettingZonesProps> = ({ imageName, mapData, playerI
 
     } else {
       amount = Math.ceil(100 / zoneObject.rating);
+      
+      // Create floating heart for successful pets
+      const event = new MouseEvent('click', { 
+        clientX: Math.random() * window.innerWidth, 
+        clientY: Math.random() * window.innerHeight 
+      });
+      createFloatingHeart(
+        event.clientX || Math.random() * window.innerWidth, 
+        event.clientY || Math.random() * window.innerHeight, 
+        'small'
+      );
+      
+      // Create love particles
+      createLoveParticles(
+        event.clientX || Math.random() * window.innerWidth, 
+        event.clientY || Math.random() * window.innerHeight, 
+        2
+      );
     }
 
     // Add the action to the queue
     actionQueue.current.push({ playerId, amount });
   }, [playerId]);
 
-  const handlePointerDown = useCallback((zone: string) => {
+  const handlePointerDown = useCallback((zone: string, event?: MouseEvent | TouchEvent) => {
     console.log(`Pointer down in ${zone}`);
     setActiveZone(zone);
+    
+    // Create interaction effects
+    if (event) {
+      const clientX = (event instanceof TouchEvent) ? event.touches[0].clientX : event.clientX;
+      const clientY = (event instanceof TouchEvent) ? event.touches[0].clientY : event.clientY;
+      
+      createLoveParticles(clientX, clientY, 3);
+    }
   }, []);
 
   const handlePointerMove = useCallback((event: MouseEvent | TouchEvent) => {
@@ -55,6 +82,9 @@ const PettingZones: React.FC<PettingZonesProps> = ({ imageName, mapData, playerI
         console.log(`Pointer moved to ${zone}`);
         rollDiceForZone(zoneObject);
         setActiveZone(zone);
+        
+        // Add petting effect to the area element
+        triggerPettingEffect(element as HTMLAreaElement);
       }
     }
   }, [activeZone, mapData, rollDiceForZone]);
@@ -63,6 +93,18 @@ const PettingZones: React.FC<PettingZonesProps> = ({ imageName, mapData, playerI
     console.log('Pointer up');
     setActiveZone(null);
   }, []);
+
+  const handleAreaClick = useCallback((area: AreaData, event: React.MouseEvent | React.TouchEvent) => {
+    // Create floating heart at click location
+    const clientX = 'clientX' in event ? event.clientX : event.touches[0].clientX;
+    const clientY = 'clientY' in event ? event.clientY : event.touches[0].clientY;
+    
+    createFloatingHeart(clientX, clientY, 'medium');
+    createLoveParticles(clientX, clientY, 5);
+    
+    // Roll dice for the zone
+    rollDiceForZone(area);
+  }, [rollDiceForZone]);
 
   useEffect(() => {
     const handleMouseMove = (event: MouseEvent) => handlePointerMove(event);
@@ -110,7 +152,7 @@ const PettingZones: React.FC<PettingZonesProps> = ({ imageName, mapData, playerI
     <div>
       <map
         name={imageName}
-        onPointerDown={(e: React.PointerEvent<HTMLElement>) => handlePointerDown((e.target as HTMLAreaElement).alt)}
+        onPointerDown={(e: React.PointerEvent<HTMLElement>) => handlePointerDown((e.target as HTMLAreaElement).alt, e.nativeEvent)}
         style={{ cursor: playerId ? 'grabbing' : 'default' }}
       >
         {mapData.map((area, index) => (
@@ -118,11 +160,12 @@ const PettingZones: React.FC<PettingZonesProps> = ({ imageName, mapData, playerI
             key={index}
             alt={area.title}
             title={area.title}
-            onPointerDown={() => handlePointerDown(area.title)}
-            onTouchStart={() => handlePointerDown(area.title)}
-            onClick={() => rollDiceForZone(area)}
+            onPointerDown={(e) => handlePointerDown(area.title, e.nativeEvent)}
+            onTouchStart={(e) => handlePointerDown(area.title, e.nativeEvent)}
+            onClick={(e) => handleAreaClick(area, e)}
             coords={area.coords}
             shape={area.shape}
+            className="petting-zone"
             style={{ cursor: 'grab' }}
           />
         ))}

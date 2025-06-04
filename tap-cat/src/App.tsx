@@ -14,7 +14,7 @@ import {
   createHappinessCelebration, 
   createLoveParticles,
   triggerPointsAnimation 
-} from './animationHelpers';
+} from './animationHelpers.js';
 import './animations.css';
 
 const MadSound = new Audio(catMadSound);
@@ -57,17 +57,17 @@ function App() {
         if (action && action.name === "updateScratch") MadSound.play();
         if (action && action.name === "updateScore" && game.catHappiness > 75) purrSound.play();
         
-        // Handle happiness milestone celebrations
-        if (previousHappiness < 90 && game.catHappiness >= 90) {
+        // Handle happiness milestone celebrations (using 1000 scale)
+        if (previousHappiness < 900 && game.catHappiness >= 900) {
           createHappinessCelebration('🌟💖 MAXIMUM LOVE! 💖🌟');
           // Create multiple large hearts
           setTimeout(() => createFloatingHeart(Math.random() * window.innerWidth, window.innerHeight, 'large'), 100);
           setTimeout(() => createFloatingHeart(Math.random() * window.innerWidth, window.innerHeight, 'large'), 300);
           setTimeout(() => createFloatingHeart(Math.random() * window.innerWidth, window.innerHeight, 'large'), 500);
-        } else if (previousHappiness < 75 && game.catHappiness >= 75) {
+        } else if (previousHappiness < 750 && game.catHappiness >= 750) {
           createHappinessCelebration('😻 VERY HAPPY! 😻');
           createFloatingHeart(window.innerWidth / 2, window.innerHeight, 'large');
-        } else if (previousHappiness < 50 && game.catHappiness >= 50) {
+        } else if (previousHappiness < 500 && game.catHappiness >= 500) {
           createHappinessCelebration('😸 CONTENT! 😸');
           createFloatingHeart(window.innerWidth / 2, window.innerHeight, 'medium');
         }

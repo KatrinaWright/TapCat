@@ -19,10 +19,16 @@ const CatHappinessBar: React.FC<CatHappinessBarProps> = ({ catHappiness }) => {
     return 'purple';
   };
 
+  // Add milestone celebration classes
+  const getMilestoneClass = (percentage: number) => {
+    if (percentage >= 90) return 'milestone-reached';
+    return '';
+  };
+
   return (
-    <div className="cat-happiness-container">
+    <div className={`cat-happiness-container enhanced ${getMilestoneClass(happinessPercentage)}`}>
       <img src={LeftImage} alt="Left" className="side-image" />
-      <div className="cat-happiness-bar">
+      <div className="cat-happiness-bar enhanced">
         <div
           className={`cat-happiness-fill ${getColorClass(happinessPercentage)}`}
           style={{ width: `${happinessPercentage}%` }}
