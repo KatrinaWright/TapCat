@@ -43,11 +43,20 @@ export const getPlayerPerformanceLevel = (playerScore, allScores) => {
   return 'low-performer';
 };
 
-// Add earning points animation to player card
+// Add earning points animation to player card with dispersed hearts
 export const triggerPointsAnimation = (playerId) => {
   const playerCard = document.querySelector(`[data-player-id="${playerId}"]`);
   if (playerCard) {
     playerCard.classList.add('earning-points');
+    
+    // Create multiple hearts from random positions on the card
+    const rect = playerCard.getBoundingClientRect();
+    for (let i = 0; i < 3; i++) {
+      const randomX = rect.left + Math.random() * rect.width;
+      const randomY = rect.top + Math.random() * rect.height;
+      createFloatingHeart(randomX, randomY, 'small');
+    }
+    
     setTimeout(() => {
       playerCard.classList.remove('earning-points');
     }, 600);
@@ -90,6 +99,64 @@ export const createLoveParticles = (x, y, count = 5) => {
     particle.style.top = `${y + Math.random() * 20 - 10}px`;
     particle.style.setProperty('--random-x', `${randomX}px`);
     particle.style.setProperty('--random-y', `-${randomY}px`);
+    
+    document.body.appendChild(particle);
+    
+    setTimeout(() => {
+      if (particle.parentNode) {
+        particle.parentNode.removeChild(particle);
+      }
+    }, 2000);
+  }
+};
+
+// Create angry particles for risky moves (1-25 rolls)
+export const createAngryParticles = (x, y, count = 3) => {
+  const angrySymbols = ['💢', '⚡', '💥', '😾', '❌'];
+  
+  for (let i = 0; i < count; i++) {
+    const particle = document.createElement('div');
+    particle.className = 'angry-particle';
+    particle.innerHTML = angrySymbols[Math.floor(Math.random() * angrySymbols.length)];
+    
+    const randomX = Math.random() * 80 - 40;
+    const randomY = Math.random() * 80 - 20;
+    const randomRotate = Math.random() * 360;
+    
+    particle.style.left = `${x + Math.random() * 20 - 10}px`;
+    particle.style.top = `${y + Math.random() * 20 - 10}px`;
+    particle.style.setProperty('--random-x', `${randomX}px`);
+    particle.style.setProperty('--random-y', `${randomY}px`);
+    particle.style.setProperty('--random-rotate', `${randomRotate}deg`);
+    
+    document.body.appendChild(particle);
+    
+    setTimeout(() => {
+      if (particle.parentNode) {
+        particle.parentNode.removeChild(particle);
+      }
+    }, 2000);
+  }
+};
+
+// Create caution particles for medium-risk moves (26-50 rolls)
+export const createCautionParticles = (x, y, count = 4) => {
+  const cautionSymbols = ['⚠️', '❓', '❗', '😼', '👀'];
+  
+  for (let i = 0; i < count; i++) {
+    const particle = document.createElement('div');
+    particle.className = 'caution-particle';
+    particle.innerHTML = cautionSymbols[Math.floor(Math.random() * cautionSymbols.length)];
+    
+    const randomX = Math.random() * 60 - 30;
+    const randomY = Math.random() * 60 - 10;
+    const randomRotate = Math.random() * 180;
+    
+    particle.style.left = `${x + Math.random() * 20 - 10}px`;
+    particle.style.top = `${y + Math.random() * 20 - 10}px`;
+    particle.style.setProperty('--random-x', `${randomX}px`);
+    particle.style.setProperty('--random-y', `${randomY}px`);
+    particle.style.setProperty('--random-rotate', `${randomRotate}deg`);
     
     document.body.appendChild(particle);
     

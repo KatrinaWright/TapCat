@@ -241,12 +241,25 @@
 
 /* Idle animation overlay enhancements */
 .idle-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   background: rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(5px);
   transition: all 0.5s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9000;
 }
 
 .idle-message {
+  position: absolute;
+  top: 35%; /* Position it over the center of the cat image */
+  left: 50%;
+  transform: translate(-50%, -50%);
   background: rgba(255, 255, 255, 0.9);
   border-radius: 20px;
   padding: 30px;
@@ -255,8 +268,8 @@
 }
 
 @keyframes gentlePulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.02); }
+  0%, 100% { transform: translate(-50%, -50%) scale(1); }
+  50% { transform: translate(-50%, -50%) scale(1.02); }
 }
 
 /* Responsive design for smaller screens */
@@ -318,6 +331,28 @@
   pointer-events: none;
 }
 
+/* Angry particles effect for risky moves */
+.angry-particle {
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  font-size: 15px;
+  animation: angryParticle 2s ease-out forwards;
+  pointer-events: none;
+  z-index: 100;
+}
+
+/* Medium risk particles */
+.caution-particle {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  font-size: 12px;
+  animation: cautionParticle 2s ease-out forwards;
+  pointer-events: none;
+  z-index: 100;
+}
+
 @keyframes loveParticle {
   0% {
     transform: translate(0, 0) scale(1);
@@ -325,6 +360,28 @@
   }
   100% {
     transform: translate(var(--random-x, 50px), var(--random-y, -100px)) scale(0);
+    opacity: 0;
+  }
+}
+
+@keyframes angryParticle {
+  0% {
+    transform: translate(0, 0) scale(1) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--random-x, 40px), var(--random-y, -80px)) scale(0.5) rotate(var(--random-rotate, 180deg));
+    opacity: 0;
+  }
+}
+
+@keyframes cautionParticle {
+  0% {
+    transform: translate(0, 0) scale(1) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--random-x, 30px), var(--random-y, -60px)) scale(0.7) rotate(var(--random-rotate, 90deg));
     opacity: 0;
   }
 }

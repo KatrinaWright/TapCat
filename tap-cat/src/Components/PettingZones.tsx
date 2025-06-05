@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { createFloatingHeart, createLoveParticles, triggerPettingEffect } from '../animationHelpers';
+import { createFloatingHeart, createLoveParticles, triggerPettingEffect, createAngryParticles, createCautionParticles } from '../animationHelpers';
 
 // Define the structure of the JSON data
 interface AreaData {
@@ -26,24 +26,28 @@ const PettingZones: React.FC<PettingZonesProps> = ({ imageName, mapData, playerI
     console.log(`Rolled a ${diceRoll} out of ${zoneObject.rating} for ${zoneObject.title}`);
 
     let amount;
+    const riskPercentage = (diceRoll / zoneObject.rating) * 100;
+    
     if (diceRoll === 1) {
       amount = -100;
       Rune.actions.updateScratch({ playerId, amount: 1 });
       console.log(`Player got scratched! ${playerId}`);
-      
-      // Create angry particles
-      createLoveParticles(x, y, 8);
     } else {
       amount = Math.ceil(100 / zoneObject.rating);
-      
-      // Create heart based on success level
-      if (amount > 50) {
-        createFloatingHeart(x, y, 'large');
-      } else if (amount > 25) {
-        createFloatingHeart(x, y, 'medium');
-      } else {
-        createFloatingHeart(x, y, 'small');
-      }
+    }
+
+    // Show different effects based on risk level
+    if (diceRoll === 1) {
+      createAngryParticles(x, y, 5); // Scratch - show angry symbols
+    } else if (riskPercentage <= 25) {
+      createAngryParticles(x, y, 3); // High risk move (1-25% of max)
+    } else if (riskPercentage <= 50) {
+      createCautionParticles(x, y, 4); // Medium risk move (26-50% of max)
+    } else if (riskPercentage <= 75) {
+      createFloatingHeart(x, y, 'small'); // Low risk (51-75% of max)
+    } else {
+      createFloatingHeart(x, y, 'medium'); // Very safe move (76-100% of max)
+      createFloatingHeart(x, y, 'large'); 
     }
 
     // Add the action to the queue
