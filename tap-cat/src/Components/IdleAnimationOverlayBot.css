@@ -1,0 +1,32 @@
+/* Position the Lottie animation over the cat's back area */
+.idle-animation-overlay {
+  position: fixed;
+  top: 50%; /* Adjust this based on where your cat's back is */
+  right: 30%; /* Since cat is facing the other way, position on the right side */
+  transform: translate(50%, -50%);
+  pointer-events: none;
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.idle-animation-overlay.show {
+  opacity: 1;
+}
+
+/* Responsive positioning for different screen sizes */
+@media (max-width: 768px) {
+  .idle-animation-overlay {
+    top: 45%;
+    right: 25%;
+    transform: translate(50%, -50%) scale(0.8);
+  }
+}
+
+@media (max-width: 480px) {
+  .idle-animation-overlay {
+    top: 40%;
+    right: 20%;
+    transform: translate(50%, -50%) scale(0.6);
+  }
+}

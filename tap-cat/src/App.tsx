@@ -6,7 +6,7 @@ import { GameState } from "./logic";
 import PettingZones from "./Components/PettingZones";
 import PlayerList from "./Components/PlayerList";
 import CatHappinessBar from "./Components/CatHappinessBar";
-import IdleAnimationOverlay from "./Components/IdleAnimationOverlayBot";
+import IdleAnimationOverlay from "./Components/IdleAnimationOverlay";
 import picture from "../src/Cat Maps/CatSayingHello.gif";
 import mapData from '../src/Cat Maps/CatSayingHellomapData.json';
 import { createLoveParticles, createDramaticScratchEffect, createVariantScratchEffect } from './animationHelpers';
@@ -49,7 +49,7 @@ function App() {
             createVariantScratchEffect(); // 50% chance for variant effect
           }
         }
-        if (action && action.name === "updateScore" && game.catHappiness > 750) purrSound.play();
+        if (action && action.name === "updateScore" && game.catHappiness > 75) purrSound.play();
       },
     });
 

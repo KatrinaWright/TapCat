@@ -4,7 +4,7 @@ import scratchIcon from '../assets/lion.svg';
 import pointsIcon from '../assets/heart-eyes-cat.svg'; 
 import { GameState } from '../logic';
 import './PlayerList.css'; 
-import { getPlayerPerformanceLevel, createFloatingHeart } from '../animationHelpers';
+import { getPlayerPerformanceLevel, triggerPointsAnimation } from '../animationHelpers';
 
 interface PlayerListProps {
   playerIds: PlayerId[];
@@ -31,23 +31,8 @@ const PlayerList: React.FC<PlayerListProps> = ({ playerIds, game, yourPlayerId, 
       const previousScore = lastScores[playerId] || 0;
       
       if (currentScore > previousScore) {
-        // Player earned points - show animation
-        const cardElement = cardsRef.current[playerId];
-        if (cardElement) {
-          cardElement.classList.add('earning-points');
-          
-          // Create floating heart from player card
-          const rect = cardElement.getBoundingClientRect();
-          createFloatingHeart(
-            rect.left + rect.width / 2, 
-            rect.top, 
-            'small'
-          );
-          
-          setTimeout(() => {
-            cardElement.classList.remove('earning-points');
-          }, 600);
-        }
+        // Use the helper function that creates hearts from random positions
+        triggerPointsAnimation(playerId);
       }
     });
     
