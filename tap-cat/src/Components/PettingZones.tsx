@@ -20,6 +20,7 @@ const PettingZones: React.FC<PettingZonesProps> = ({ imageName, mapData, playerI
   const actionQueue = useRef<{ playerId: string; amount: number }[]>([]);
   const lastActionTime = useRef<number>(0);
   const areaRefs = useRef<{ [key: string]: HTMLAreaElement | null }>({});
+  const zoneCrossingCounter = useRef<number>(0);
 
   const rollDiceForZone = useCallback((zoneObject: AreaData, x: number, y: number) => {
     const diceRoll = Math.floor(Math.random() * zoneObject.rating) + 1;
@@ -73,13 +74,20 @@ const PettingZones: React.FC<PettingZonesProps> = ({ imageName, mapData, playerI
       const zoneObject = mapData.find(area => area.title === zone);
       if (zoneObject && activeZone !== zone) {
         console.log(`Pointer moved to ${zone}`);
+        // Increment counter and only show visual effects every 10th zone crossing
+        zoneCrossingCounter.current += 1;
+        
         rollDiceForZone(zoneObject, clientX, clientY);
         setActiveZone(zone);
         
-        // Visual feedback for petting zone
-        const areaElement = areaRefs.current[zone];
-        if (areaElement) {
-          triggerPettingEffect(areaElement);
+        // Only show visual effects every 10th zone crossing to reduce clutter
+        if (zoneCrossingCounter.current % 10 === 0) {
+          console.log(`Showing visual effects for zone crossing #${zoneCrossingCounter.current}`);
+          // Visual feedback for petting zone only every 10th crossing
+          const areaElement = areaRefs.current[zone];
+          if (areaElement) {
+            triggerPettingEffect(areaElement);
+          }
         }
       }
     }

@@ -1,22 +1,30 @@
+/* Position cat image container */
+.cat-image-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Your original working positioning - now relative to the cat container */
 .idle-animation-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /* transform: translate(0, 90px) rotate(-45deg); */
-    transform: rotate(-45deg) translate(-45px, 70px);
-    z-index: 1000;
-    opacity: 0;
-    transition: opacity 0.5s ease;
-    pointer-events: none;
-  }
-  
-  .idle-animation-overlay.show {
-    opacity: 1;
-    pointer-events: auto;
-  }
-  
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* Your original working transform that was petting correctly */
+  transform: rotate(-45deg) translate(-45px, 70px);
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+
+.idle-animation-overlay.show {
+  opacity: 1;
+  pointer-events: auto;
+}

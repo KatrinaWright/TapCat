@@ -77,21 +77,23 @@ function App() {
       onTouchMove={handleInteraction}
     >
       <CatHappinessBar catHappiness={catHappiness} />
-      <img src={picture} useMap="#image-map" alt="Petting Zones Map" />
-      {yourPlayerId && (
-        <PettingZones
-          imageName="image-map"
-          mapData={mapData}
-          playerId={yourPlayerId}
-        />
-      )}
+      <div className="cat-image-container">
+        <img src={picture} useMap="#image-map" alt="Petting Zones Map" />
+        {yourPlayerId && (
+          <PettingZones
+            imageName="image-map"
+            mapData={mapData}
+            playerId={yourPlayerId}
+          />
+        )}
+        {yourPlayerId && <IdleAnimationOverlay idle={idle} />}
+      </div>
       <PlayerList 
         playerIds={playerIds} 
         game={game} 
         yourPlayerId={yourPlayerId} 
         scratches={scratches} 
       />
-      {yourPlayerId && <IdleAnimationOverlay idle={idle} />}
       
       {/* Hearts container will be created dynamically */}
     </div>
