@@ -319,19 +319,17 @@ export const createRiskBasedEffect = (diceRoll, zoneRating, x, y) => {
     // Already handled by scratch logic
     return;
   } else if (diceRoll >= 2 && diceRoll <= 25) {
-    // High risk - show angry particles
-    createAngryParticles(x, y, 8);
+    // High risk - show just 1 angry particle
+    createAngryParticles(x, y, 1);
   } else if (riskPercentage <= 40) {
-    // Medium-high risk - caution effects
-    createCautionEffect(x, y, 4);
-    createFloatingHeart(x, y, 'small');
+    // Medium-high risk - one caution effect
+    createCautionEffect(x, y, 1);
   } else if (riskPercentage <= 70) {
-    // Medium risk - sparkles and medium heart
-    createSparkleEffect(x, y, 4);
-    createFloatingHeart(x, y, 'medium');
+    // Medium risk - one sparkle only
+    createSparkleEffect(x, y, 1);
   } else {
-    // Low risk - lots of sparkles and big heart
-    createSparkleEffect(x, y, 8);
-    createFloatingHeart(x, y, 'large');
+    // Low risk - one sparkle and heart
+    createSparkleEffect(x, y, 1);
+    createFloatingHeart(x, y, 'medium');
   }
 };

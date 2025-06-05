@@ -57,9 +57,9 @@ const PettingZones: React.FC<PettingZonesProps> = ({ imageName, mapData, playerI
       y = event.clientY;
     }
     
-    // Create petting effect
-    if (x && y) {
-      createLoveParticles(x, y, 3);
+    // Create petting effect - only on initial pointer down
+    if (x && y && Math.random() < 0.2) { // 20% chance to create a particle
+      createLoveParticles(x, y, 1); // Just one particle
     }
   }, []);
 

@@ -25,11 +25,11 @@ function App() {
     lastInteractionTimeRef.current = Date.now();
     setIdle(false);
     
-    // Create subtle love particles for mouse movement
-    if ('clientX' in event && Math.random() < 0.1) { // Only 10% of movements
-      createLoveParticles(event.clientX, event.clientY, 2);
-    } else if ('touches' in event && event.touches.length && Math.random() < 0.1) {
-      createLoveParticles(event.touches[0].clientX, event.touches[0].clientY, 2);
+    // Extremely rare random particles for mouse movement (1% chance)
+    if ('clientX' in event && Math.random() < 0.01) {
+      createLoveParticles(event.clientX, event.clientY, 1); // Just one particle
+    } else if ('touches' in event && event.touches.length && Math.random() < 0.01) {
+      createLoveParticles(event.touches[0].clientX, event.touches[0].clientY, 1);
     }
   };
 
