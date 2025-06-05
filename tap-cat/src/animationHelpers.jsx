@@ -110,3 +110,105 @@ export const triggerMilestone = (element, message) => {
     element.classList.remove('milestone-reached');
   }, 1000);
 };
+
+// Create dramatic scratch effect
+export const createDramaticScratchEffect = () => {
+  // Add screen shake to the whole game container
+  const gameContainer = document.querySelector('.game-container');
+  if (gameContainer) {
+    gameContainer.classList.add('screen-shake');
+    setTimeout(() => {
+      gameContainer.classList.remove('screen-shake');
+    }, 500);
+  }
+
+  // Create the scratch overlay
+  const scratchOverlay = document.createElement('div');
+  scratchOverlay.className = 'scratch-overlay';
+  
+  const scratchEffect = document.createElement('div');
+  scratchEffect.className = 'scratch-effect';
+  
+  // Red flash background
+  const redFlash = document.createElement('div');
+  redFlash.className = 'red-flash';
+  
+  // Scratch marks slashing across
+  const scratchMarks = document.createElement('div');
+  scratchMarks.className = 'scratch-marks';
+  
+  // Giant angry cat face
+  const angryCat = document.createElement('div');
+  angryCat.className = 'angry-cat';
+  angryCat.innerHTML = '😾'; // or '🙀' for scared cat
+  
+  // Warning text
+  const warningText = document.createElement('div');
+  warningText.className = 'scratch-warning';
+  warningText.innerHTML = '⚡ SCRATCHED! ⚡';
+  
+  // Assemble the effect
+  scratchEffect.appendChild(redFlash);
+  scratchEffect.appendChild(scratchMarks);
+  scratchEffect.appendChild(angryCat);
+  scratchEffect.appendChild(warningText);
+  scratchOverlay.appendChild(scratchEffect);
+  
+  document.body.appendChild(scratchOverlay);
+  
+  // Remove after animation completes
+  setTimeout(() => {
+    if (scratchOverlay.parentNode) {
+      scratchOverlay.parentNode.removeChild(scratchOverlay);
+    }
+  }, 1500);
+};
+
+// Alternative scratch effects for variety
+export const createVariantScratchEffect = () => {
+  const gameContainer = document.querySelector('.game-container');
+  if (gameContainer) {
+    gameContainer.classList.add('screen-shake');
+    setTimeout(() => {
+      gameContainer.classList.remove('screen-shake');
+    }, 500);
+  }
+
+  const scratchOverlay = document.createElement('div');
+  scratchOverlay.className = 'scratch-overlay';
+  
+  const scratchEffect = document.createElement('div');
+  scratchEffect.className = 'scratch-effect';
+  
+  const redFlash = document.createElement('div');
+  redFlash.className = 'red-flash';
+  
+  const scratchMarks = document.createElement('div');
+  scratchMarks.className = 'scratch-marks';
+  
+  // Randomly choose different angry expressions
+  const angryCat = document.createElement('div');
+  angryCat.className = 'angry-cat';
+  const expressions = ['😾', '🙀', '😿', '💢', '⚡'];
+  angryCat.innerHTML = expressions[Math.floor(Math.random() * expressions.length)];
+  
+  // Different warning messages
+  const warningText = document.createElement('div');
+  warningText.className = 'scratch-warning';
+  const messages = ['⚡ SCRATCHED! ⚡', '💢 OUCH! 💢', '🙀 MEOWCH! 🙀', '😾 ANGRY CAT! 😾'];
+  warningText.innerHTML = messages[Math.floor(Math.random() * messages.length)];
+  
+  scratchEffect.appendChild(redFlash);
+  scratchEffect.appendChild(scratchMarks);
+  scratchEffect.appendChild(angryCat);
+  scratchEffect.appendChild(warningText);
+  scratchOverlay.appendChild(scratchEffect);
+  
+  document.body.appendChild(scratchOverlay);
+  
+  setTimeout(() => {
+    if (scratchOverlay.parentNode) {
+      scratchOverlay.parentNode.removeChild(scratchOverlay);
+    }
+  }, 1500);
+};

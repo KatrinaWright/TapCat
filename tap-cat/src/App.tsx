@@ -9,7 +9,7 @@ import CatHappinessBar from "./Components/CatHappinessBar";
 import IdleAnimationOverlay from "./Components/IdleAnimationOverlay";
 import picture from "../src/Cat Maps/CatSayingHello.gif";
 import mapData from '../src/Cat Maps/CatSayingHellomapData.json';
-import { createLoveParticles } from './animationHelpers';
+import { createLoveParticles, createDramaticScratchEffect, createVariantScratchEffect } from './animationHelpers';
 import './animations.css';
 
 const MadSound = new Audio(catMadSound);
@@ -39,8 +39,16 @@ function App() {
         setGame(game);
         setYourPlayerId(yourPlayerId);
 
-        // Handle sound effects
-        if (action && action.name === "updateScratch") MadSound.play();
+        // Handle sound effects and dramatic scratch effect
+        if (action && action.name === "updateScratch") {
+          MadSound.play();
+          // Trigger dramatic scratch effect
+          if (Math.random() < 0.5) {
+            createDramaticScratchEffect(); // 50% chance for main effect
+          } else {
+            createVariantScratchEffect(); // 50% chance for variant effect
+          }
+        }
         if (action && action.name === "updateScore" && game.catHappiness > 750) purrSound.play();
       },
     });
