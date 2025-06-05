@@ -227,7 +227,7 @@ export const createVariantScratchEffect = () => {
 };
 
 // Create angry particles for risky moves (dice roll 2-25)
-export const createAngryParticles = (x, y, count = 8) => {
+export const createAngryParticles = (x, y, count = 2) => {
   for (let i = 0; i < count; i++) {
     const particle = document.createElement('div');
     particle.className = 'angry-particle';
@@ -255,7 +255,7 @@ export const createAngryParticles = (x, y, count = 8) => {
 };
 
 // Create sparkle effects for good moves
-export const createSparkleEffect = (x, y, count = 6) => {
+export const createSparkleEffect = (x, y, count = 2) => {
   for (let i = 0; i < count; i++) {
     const particle = document.createElement('div');
     particle.className = 'sparkle-particle';
@@ -283,7 +283,7 @@ export const createSparkleEffect = (x, y, count = 6) => {
 };
 
 // Create caution effects for medium-risk moves  
-export const createCautionEffect = (x, y, count = 4) => {
+export const createCautionEffect = (x, y, count = 2) => {
   for (let i = 0; i < count; i++) {
     const particle = document.createElement('div');
     particle.className = 'caution-particle';
@@ -319,19 +319,19 @@ export const createRiskBasedEffect = (diceRoll, zoneRating, x, y) => {
     // Already handled by scratch logic
     return;
   } else if (diceRoll >= 2 && diceRoll <= 25) {
-    // High risk - show angry particles
-    createAngryParticles(x, y, 8);
+    // High risk - show angry particles (reduced from 8 to 2)
+    createAngryParticles(x, y, 2);
   } else if (riskPercentage <= 40) {
-    // Medium-high risk - caution effects
-    createCautionEffect(x, y, 4);
+    // Medium-high risk - caution effects (reduced from 4 to 2)
+    createCautionEffect(x, y, 2);
     createFloatingHeart(x, y, 'small');
   } else if (riskPercentage <= 70) {
-    // Medium risk - sparkles and medium heart
-    createSparkleEffect(x, y, 4);
+    // Medium risk - sparkles and medium heart (reduced from 4 to 2)
+    createSparkleEffect(x, y, 2);
     createFloatingHeart(x, y, 'medium');
   } else {
-    // Low risk - lots of sparkles and big heart
-    createSparkleEffect(x, y, 8);
+    // Low risk - sparkles and big heart (reduced from 8 to 3)
+    createSparkleEffect(x, y, 3);
     createFloatingHeart(x, y, 'large');
   }
 };
