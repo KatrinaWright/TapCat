@@ -1,0 +1,67 @@
+/* .idle-animation-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  display: none;
+  backdrop-filter: blur(3px);
+  transition: opacity 0.3s ease;
+} */
+.idle-animation-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* transform: translate(0, 90px) rotate(-45deg); */
+    transform: rotate(-45deg) translate(-45px, 70px);
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+  }
+  
+  .idle-animation-overlay.show {
+    opacity: 1;
+    pointer-events: auto;
+    display: block;
+  }
+  
+/* .idle-animation-overlay.show {
+  display: block;
+} */
+
+/* Adjust the lottie animation to be positioned over the cat's back */
+.lottie-container {
+  position: absolute;
+  top: 35%;        /* Position vertically to middle of screen */
+  left: 50%;       /* Position horizontally centered */
+  transform: translate(-50%, -50%); /* Center the container */
+  z-index: 1001;
+  pointer-events: none;
+  /* Flip the animation since cat is facing the other way */
+  transform: translate(-50%, -50%) scaleX(-1); 
+  /* Adjust size so it's not too overpowering */
+  width: 300px;    
+  height: 300px;
+}
+
+.idle-message {
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 15px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  width: 80%;
+  max-width: 400px;
+}

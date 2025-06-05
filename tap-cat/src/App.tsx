@@ -49,7 +49,7 @@ function App() {
             createVariantScratchEffect(); // 50% chance for variant effect
           }
         }
-        if (action && action.name === "updateScore" && game.catHappiness > 750) purrSound.play();
+        if (action && action.name === "updateScore" && game.catHappiness > 75) purrSound.play(); // Restore original logic
       },
     });
 
@@ -77,7 +77,9 @@ function App() {
       onTouchMove={handleInteraction}
     >
       <CatHappinessBar catHappiness={catHappiness} />
+      
       <img src={picture} useMap="#image-map" alt="Petting Zones Map" />
+            {yourPlayerId && <IdleAnimationOverlay idle={idle} />}
       {yourPlayerId && (
         <PettingZones
           imageName="image-map"
@@ -91,7 +93,7 @@ function App() {
         yourPlayerId={yourPlayerId} 
         scratches={scratches} 
       />
-      {yourPlayerId && <IdleAnimationOverlay idle={idle} />}
+
       
       {/* Hearts container will be created dynamically */}
     </div>

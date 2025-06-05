@@ -38,11 +38,15 @@ const PlayerList: React.FC<PlayerListProps> = ({ playerIds, game, yourPlayerId, 
           
           // Create floating heart from player card
           const rect = cardElement.getBoundingClientRect();
-          createFloatingHeart(
-            rect.left + rect.width / 2, 
-            rect.top, 
-            'small'
-          );
+          // Create multiple hearts at different positions
+          for (let i = 0; i < 3; i++) {
+            const randomX = rect.left + Math.random() * rect.width;
+            const randomY = rect.top + Math.random() * rect.height;
+            
+            setTimeout(() => {
+              createFloatingHeart(randomX, randomY, 'small');
+            }, i * 150);
+          }
           
           setTimeout(() => {
             cardElement.classList.remove('earning-points');
