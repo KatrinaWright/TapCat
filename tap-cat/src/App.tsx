@@ -25,11 +25,11 @@ function App() {
     lastInteractionTimeRef.current = Date.now();
     setIdle(false);
     
-    // Create subtle love particles for mouse movement
-    if ('clientX' in event && Math.random() < 0.1) { // Only 10% of movements
-      createLoveParticles(event.clientX, event.clientY, 2);
-    } else if ('touches' in event && event.touches.length && Math.random() < 0.1) {
-      createLoveParticles(event.touches[0].clientX, event.touches[0].clientY, 2);
+    // Create subtle love particles for mouse movement (extremely rarely)
+    if ('clientX' in event && Math.random() < 0.01) { // Only 1% of movements
+      createLoveParticles(event.clientX, event.clientY, 1);
+    } else if ('touches' in event && event.touches.length && Math.random() < 0.01) {
+      createLoveParticles(event.touches[0].clientX, event.touches[0].clientY, 1);
     }
   };
 
@@ -77,21 +77,24 @@ function App() {
       onTouchMove={handleInteraction}
     >
       <CatHappinessBar catHappiness={catHappiness} />
-      <img src={picture} useMap="#image-map" alt="Petting Zones Map" />
-      {yourPlayerId && (
-        <PettingZones
-          imageName="image-map"
-          mapData={mapData}
-          playerId={yourPlayerId}
-        />
-      )}
+      <div className="cat-image-container" style={{ position: 'relative' }}>
+        <img src={picture} useMap="#image-map" alt="Petting Zones Map" />
+        {/* Position idle animation directly over the cat */}
+        {yourPlayerId && idle && <IdleAnimationOverlay idle={idle} />}
+        {yourPlayerId && (
+          <PettingZones
+            imageName="image-map"
+            mapData={mapData}
+            playerId={yourPlayerId}
+          />
+        )}
+      </div>
       <PlayerList 
         playerIds={playerIds} 
         game={game} 
         yourPlayerId={yourPlayerId} 
         scratches={scratches} 
       />
-      {yourPlayerId && <IdleAnimationOverlay idle={idle} />}
       
       {/* Hearts container will be created dynamically */}
     </div>

@@ -34,8 +34,10 @@ const PettingZones: React.FC<PettingZonesProps> = ({ imageName, mapData, playerI
     } else {
       amount = Math.ceil(100 / zoneObject.rating);
       
-      // Use risk-based visual effects instead of just hearts
-      createRiskBasedEffect(diceRoll, zoneObject.rating, x, y);
+      // Only show visual effects every 10th zone crossed (reduce noise)
+      if (Math.random() < 0.1) {
+        createRiskBasedEffect(diceRoll, zoneObject.rating, x, y);
+      }
     }
 
     // Add the action to the queue
