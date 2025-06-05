@@ -1,7 +1,7 @@
 import React from 'react';
 import Lottie from 'react-lottie';
 import animationData from '../assets/swipe-left.json'; 
-import './IdleAnimationOverlay.css'; 
+import './IdleAnimationOverlayBot.css'; 
 
 interface IdleAnimationOverlayProps {
   idle: boolean;

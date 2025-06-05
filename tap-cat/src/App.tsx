@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef  } from "react";
 import { PlayerId } from "rune-games-sdk/multiplayer";
-import catHappyPurr from "./assets/purring-cat-156459.mp3"
-import catMadSound from "./assets/sat-on-the-cat-95941.mp3"
+import catHappyPurr from "./assets/purring-cat-156459.mp3";
+import catMadSound from "./assets/sat-on-the-cat-95941.mp3";
 import { GameState } from "./logic";
 import PettingZones from "./Components/PettingZones";
 import PlayerList from "./Components/PlayerList";
@@ -9,8 +9,9 @@ import CatHappinessBar from "./Components/CatHappinessBar";
 import IdleAnimationOverlay from "./Components/IdleAnimationOverlay";
 import picture from "../src/Cat Maps/CatSayingHello.gif";
 import mapData from '../src/Cat Maps/CatSayingHellomapData.json';
+import { createLoveParticles, createDramaticScratchEffect, createVariantScratchEffect } from './animationHelpers';
+import './animations.css';
 
-//const selectSound = new Audio(selectSoundAudio);
 const MadSound = new Audio(catMadSound);
 const purrSound = new Audio(catHappyPurr);
 
@@ -20,9 +21,16 @@ function App() {
   const [idle, setIdle] = useState(false);
   const lastInteractionTimeRef = useRef<number>(Date.now());
 
-  const handleInteraction = () => {
+  const handleInteraction = (event: React.MouseEvent | React.TouchEvent) => {
     lastInteractionTimeRef.current = Date.now();
     setIdle(false);
+    
+    // Extremely rare random particles for mouse movement (1% chance)
+    if ('clientX' in event && Math.random() < 0.01) {
+      createLoveParticles(event.clientX, event.clientY, 1); // Just one particle
+    } else if ('touches' in event && event.touches.length && Math.random() < 0.01) {
+      createLoveParticles(event.touches[0].clientX, event.touches[0].clientY, 1);
+    }
   };
 
   useEffect(() => {
@@ -31,10 +39,17 @@ function App() {
         setGame(game);
         setYourPlayerId(yourPlayerId);
 
-        if (action && action.name === "updateScratch") MadSound.play();
-        if (action && action.name === "updateScore" && game.catHappiness > 75 ) purrSound.play();
-        
-        
+        // Handle sound effects and dramatic scratch effect
+        if (action && action.name === "updateScratch") {
+          MadSound.play();
+          // Trigger dramatic scratch effect
+          if (Math.random() < 0.5) {
+            createDramaticScratchEffect(); // 50% chance for main effect
+          } else {
+            createVariantScratchEffect(); // 50% chance for variant effect
+          }
+        }
+        if (action && action.name === "updateScore" && game.catHappiness > 75) purrSound.play();
       },
     });
 
@@ -46,7 +61,7 @@ function App() {
     }, 1000);
 
     return () => clearInterval(interval);
-    }, []);
+  }, []);
 
   if (!game) {
     // Rune only shows your game after an onChange() so no need for loading screen
@@ -56,18 +71,31 @@ function App() {
   const { playerIds, scratches, catHappiness } = game;
 
   return (   
-    <div onMouseMove={handleInteraction} onTouchMove={handleInteraction}>
+    <div 
+      className="game-container" 
+      onMouseMove={handleInteraction} 
+      onTouchMove={handleInteraction}
+    >
       <CatHappinessBar catHappiness={catHappiness} />
-      <img src={picture} useMap="#image-map" alt="Petting Zones Map" />
-      {yourPlayerId && (
-        <PettingZones
-          imageName="image-map"
-          mapData={mapData}
-          playerId={yourPlayerId}
-        />
-      )}
-      <PlayerList playerIds={playerIds} game={game} yourPlayerId={yourPlayerId} scratches={scratches} />
-      {yourPlayerId && <IdleAnimationOverlay idle={idle} />}
+      <div className="cat-image-container">
+        <img src={picture} useMap="#image-map" alt="Petting Zones Map" />
+        {yourPlayerId && (
+          <PettingZones
+            imageName="image-map"
+            mapData={mapData}
+            playerId={yourPlayerId}
+          />
+        )}
+        {yourPlayerId && <IdleAnimationOverlay idle={idle} />}
+      </div>
+      <PlayerList 
+        playerIds={playerIds} 
+        game={game} 
+        yourPlayerId={yourPlayerId} 
+        scratches={scratches} 
+      />
+      
+      {/* Hearts container will be created dynamically */}
     </div>
   );
 }

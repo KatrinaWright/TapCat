@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { createFloatingHeart, createLoveParticles, triggerPettingEffect, createRiskBasedEffect } from '../animationHelpers';
 
 // Define the structure of the JSON data
 interface AreaData {
@@ -18,8 +19,10 @@ const PettingZones: React.FC<PettingZonesProps> = ({ imageName, mapData, playerI
   const [activeZone, setActiveZone] = useState<string | null>(null);
   const actionQueue = useRef<{ playerId: string; amount: number }[]>([]);
   const lastActionTime = useRef<number>(0);
+  const areaRefs = useRef<{ [key: string]: HTMLAreaElement | null }>({});
+  const zoneCrossingCounter = useRef<number>(0);
 
-  const rollDiceForZone = useCallback((zoneObject: AreaData) => {
+  const rollDiceForZone = useCallback((zoneObject: AreaData, x: number, y: number) => {
     const diceRoll = Math.floor(Math.random() * zoneObject.rating) + 1;
     console.log(`Rolled a ${diceRoll} out of ${zoneObject.rating} for ${zoneObject.title}`);
 
@@ -28,18 +31,36 @@ const PettingZones: React.FC<PettingZonesProps> = ({ imageName, mapData, playerI
       amount = -100;
       Rune.actions.updateScratch({ playerId, amount: 1 });
       console.log(`Player got scratched! ${playerId}`);
-
+      // Scratch effect handled in App.tsx
     } else {
       amount = Math.ceil(100 / zoneObject.rating);
+      
+      // Use risk-based visual effects instead of just hearts
+      createRiskBasedEffect(diceRoll, zoneObject.rating, x, y);
     }
 
     // Add the action to the queue
     actionQueue.current.push({ playerId, amount });
   }, [playerId]);
 
-  const handlePointerDown = useCallback((zone: string) => {
+  const handlePointerDown = useCallback((zone: string, event: React.PointerEvent<HTMLAreaElement> | React.TouchEvent<HTMLAreaElement>) => {
     console.log(`Pointer down in ${zone}`);
     setActiveZone(zone);
+    
+    // Get coordinates from event
+    let x, y;
+    if ('touches' in event && event.touches.length) {
+      x = event.touches[0].clientX;
+      y = event.touches[0].clientY;
+    } else if ('clientX' in event) {
+      x = event.clientX;
+      y = event.clientY;
+    }
+    
+    // Create petting effect - only on initial pointer down
+    if (x && y && Math.random() < 0.2) { // 20% chance to create a particle
+      createLoveParticles(x, y, 1); // Just one particle
+    }
   }, []);
 
   const handlePointerMove = useCallback((event: MouseEvent | TouchEvent) => {
@@ -53,8 +74,21 @@ const PettingZones: React.FC<PettingZonesProps> = ({ imageName, mapData, playerI
       const zoneObject = mapData.find(area => area.title === zone);
       if (zoneObject && activeZone !== zone) {
         console.log(`Pointer moved to ${zone}`);
-        rollDiceForZone(zoneObject);
+        // Increment counter and only show visual effects every 10th zone crossing
+        zoneCrossingCounter.current += 1;
+        
+        rollDiceForZone(zoneObject, clientX, clientY);
         setActiveZone(zone);
+        
+        // Only show visual effects every 10th zone crossing to reduce clutter
+        if (zoneCrossingCounter.current % 10 === 0) {
+          console.log(`Showing visual effects for zone crossing #${zoneCrossingCounter.current}`);
+          // Visual feedback for petting zone only every 10th crossing
+          const areaElement = areaRefs.current[zone];
+          if (areaElement) {
+            triggerPettingEffect(areaElement);
+          }
+        }
       }
     }
   }, [activeZone, mapData, rollDiceForZone]);
@@ -106,23 +140,28 @@ const PettingZones: React.FC<PettingZonesProps> = ({ imageName, mapData, playerI
     processQueue();
   }, []);
 
+  const handleAreaClick = useCallback((area: AreaData, event: React.MouseEvent<HTMLAreaElement>) => {
+    rollDiceForZone(area, event.clientX, event.clientY);
+  }, [rollDiceForZone]);
+
   return (
     <div>
       <map
         name={imageName}
-        onPointerDown={(e: React.PointerEvent<HTMLElement>) => handlePointerDown((e.target as HTMLAreaElement).alt)}
         style={{ cursor: playerId ? 'grabbing' : 'default' }}
       >
         {mapData.map((area, index) => (
           <area
             key={index}
+            ref={el => areaRefs.current[area.title] = el}
             alt={area.title}
             title={area.title}
-            onPointerDown={() => handlePointerDown(area.title)}
-            onTouchStart={() => handlePointerDown(area.title)}
-            onClick={() => rollDiceForZone(area)}
+            onPointerDown={(e) => handlePointerDown(area.title, e)}
+            onTouchStart={(e) => handlePointerDown(area.title, e)}
+            onClick={(e) => handleAreaClick(area, e)}
             coords={area.coords}
             shape={area.shape}
+            className="petting-zone"
             style={{ cursor: 'grab' }}
           />
         ))}
