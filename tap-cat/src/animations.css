@@ -241,9 +241,18 @@
 
 /* Idle animation overlay enhancements */
 .idle-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
   background: rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(5px);
   transition: all 0.5s ease;
+  z-index: 1001;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .idle-message {
@@ -252,6 +261,42 @@
   padding: 30px;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
   animation: gentlePulse 3s ease-in-out infinite;
+  text-align: center;
+}
+
+/* Position idle swipe animation over cat's back */
+.idle-swipe-animation {
+  position: absolute;
+  top: 40%; /* Adjust this to position over cat's back */
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 48px;
+  animation: swipeGesture 2s ease-in-out infinite;
+  z-index: 1002;
+  pointer-events: none;
+}
+
+@keyframes swipeGesture {
+  0% {
+    transform: translate(-50%, -50%) scale(0.8);
+    opacity: 0.3;
+  }
+  25% {
+    transform: translate(-30%, -30%) scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translate(-10%, -10%) scale(1.1);
+    opacity: 1;
+  }
+  75% {
+    transform: translate(10%, 10%) scale(1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate(30%, 30%) scale(0.8);
+    opacity: 0.3;
+  }
 }
 
 @keyframes gentlePulse {
@@ -325,6 +370,97 @@
   }
   100% {
     transform: translate(var(--random-x, 50px), var(--random-y, -100px)) scale(0);
+    opacity: 0;
+  }
+}
+
+/* Angry particles for risky moves */
+.angry-particle {
+  position: absolute;
+  font-size: 20px;
+  animation: angryParticle 2s ease-out forwards;
+  pointer-events: none;
+  z-index: 900;
+  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+@keyframes angryParticle {
+  0% {
+    transform: translate(0, 0) scale(0.5) rotate(0deg);
+    opacity: 1;
+  }
+  25% {
+    transform: translate(calc(var(--random-x, 50px) * 0.3), calc(var(--random-y, -50px) * 0.3)) scale(1.2) rotate(90deg);
+    opacity: 1;
+  }
+  75% {
+    transform: translate(calc(var(--random-x, 50px) * 0.8), calc(var(--random-y, -50px) * 0.8)) scale(0.8) rotate(180deg);
+    opacity: 0.6;
+  }
+  100% {
+    transform: translate(var(--random-x, 50px), var(--random-y, -50px)) scale(0.3) rotate(270deg);
+    opacity: 0;
+  }
+}
+
+/* Sparkle particles for good moves */
+.sparkle-particle {
+  position: absolute;
+  font-size: 18px;
+  animation: sparkleParticle 2.5s ease-out forwards;
+  pointer-events: none;
+  z-index: 900;
+  filter: drop-shadow(1px 1px 3px rgba(255, 215, 0, 0.5));
+}
+
+@keyframes sparkleParticle {
+  0% {
+    transform: translate(0, 0) scale(0.3) rotate(0deg);
+    opacity: 0;
+  }
+  20% {
+    transform: translate(calc(var(--random-x, 40px) * 0.2), calc(var(--random-y, -30px) * 0.2)) scale(1.1) rotate(72deg);
+    opacity: 1;
+  }
+  50% {
+    transform: translate(calc(var(--random-x, 40px) * 0.6), calc(var(--random-y, -30px) * 0.6)) scale(1) rotate(180deg);
+    opacity: 1;
+  }
+  80% {
+    transform: translate(calc(var(--random-x, 40px) * 0.9), calc(var(--random-y, -30px) * 0.9)) scale(0.7) rotate(288deg);
+    opacity: 0.7;
+  }
+  100% {
+    transform: translate(var(--random-x, 40px), var(--random-y, -30px)) scale(0.2) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* Caution particles for medium-risk moves */
+.caution-particle {
+  position: absolute;
+  font-size: 16px;
+  animation: cautionParticle 2s ease-out forwards;
+  pointer-events: none;
+  z-index: 900;
+  filter: drop-shadow(1px 1px 2px rgba(255, 165, 0, 0.4));
+}
+
+@keyframes cautionParticle {
+  0% {
+    transform: translate(0, 0) scale(0.6) rotate(0deg);
+    opacity: 0.8;
+  }
+  30% {
+    transform: translate(calc(var(--random-x, 30px) * 0.4), calc(var(--random-y, -25px) * 0.4)) scale(1) rotate(45deg);
+    opacity: 1;
+  }
+  70% {
+    transform: translate(calc(var(--random-x, 30px) * 0.8), calc(var(--random-y, -25px) * 0.8)) scale(0.8) rotate(90deg);
+    opacity: 0.6;
+  }
+  100% {
+    transform: translate(var(--random-x, 30px), var(--random-y, -25px)) scale(0.4) rotate(135deg);
     opacity: 0;
   }
 }

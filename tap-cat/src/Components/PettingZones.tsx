@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { createFloatingHeart, createLoveParticles, triggerPettingEffect } from '../animationHelpers';
+import { createFloatingHeart, createLoveParticles, triggerPettingEffect, createRiskBasedEffect } from '../animationHelpers';
 
 // Define the structure of the JSON data
 interface AreaData {
@@ -30,20 +30,12 @@ const PettingZones: React.FC<PettingZonesProps> = ({ imageName, mapData, playerI
       amount = -100;
       Rune.actions.updateScratch({ playerId, amount: 1 });
       console.log(`Player got scratched! ${playerId}`);
-      
-      // Create angry particles
-      createLoveParticles(x, y, 8);
+      // Scratch effect handled in App.tsx
     } else {
       amount = Math.ceil(100 / zoneObject.rating);
       
-      // Create heart based on success level
-      if (amount > 50) {
-        createFloatingHeart(x, y, 'large');
-      } else if (amount > 25) {
-        createFloatingHeart(x, y, 'medium');
-      } else {
-        createFloatingHeart(x, y, 'small');
-      }
+      // Use risk-based visual effects instead of just hearts
+      createRiskBasedEffect(diceRoll, zoneObject.rating, x, y);
     }
 
     // Add the action to the queue

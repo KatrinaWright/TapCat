@@ -6,7 +6,7 @@ import { GameState } from "./logic";
 import PettingZones from "./Components/PettingZones";
 import PlayerList from "./Components/PlayerList";
 import CatHappinessBar from "./Components/CatHappinessBar";
-import IdleAnimationOverlay from "./Components/IdleAnimationOverlay";
+import IdleAnimationOverlay from "./Components/IdleAnimationOverlayBot";
 import picture from "../src/Cat Maps/CatSayingHello.gif";
 import mapData from '../src/Cat Maps/CatSayingHellomapData.json';
 import { createLoveParticles, createDramaticScratchEffect, createVariantScratchEffect } from './animationHelpers';

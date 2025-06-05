@@ -43,11 +43,24 @@ export const getPlayerPerformanceLevel = (playerScore, allScores) => {
   return 'low-performer';
 };
 
-// Add earning points animation to player card
+// Add earning points animation to player card with hearts from random positions
 export const triggerPointsAnimation = (playerId) => {
   const playerCard = document.querySelector(`[data-player-id="${playerId}"]`);
   if (playerCard) {
     playerCard.classList.add('earning-points');
+    
+    // Create hearts from random positions within the card
+    const rect = playerCard.getBoundingClientRect();
+    const heartCount = Math.floor(Math.random() * 3) + 1; // 1-3 hearts
+    
+    for (let i = 0; i < heartCount; i++) {
+      setTimeout(() => {
+        const randomX = rect.left + Math.random() * rect.width;
+        const randomY = rect.top + Math.random() * rect.height;
+        createFloatingHeart(randomX, randomY, 'small');
+      }, i * 150);
+    }
+    
     setTimeout(() => {
       playerCard.classList.remove('earning-points');
     }, 600);
@@ -211,4 +224,114 @@ export const createVariantScratchEffect = () => {
       scratchOverlay.parentNode.removeChild(scratchOverlay);
     }
   }, 1500);
+};
+
+// Create angry particles for risky moves (dice roll 2-25)
+export const createAngryParticles = (x, y, count = 8) => {
+  for (let i = 0; i < count; i++) {
+    const particle = document.createElement('div');
+    particle.className = 'angry-particle';
+    
+    const randomX = Math.random() * 120 - 60;
+    const randomY = Math.random() * 80 + 40;
+    
+    particle.style.left = `${x + Math.random() * 30 - 15}px`;
+    particle.style.top = `${y + Math.random() * 30 - 15}px`;
+    particle.style.setProperty('--random-x', `${randomX}px`);
+    particle.style.setProperty('--random-y', `-${randomY}px`);
+    
+    // Different angry symbols
+    const angrySymbols = ['💢', '😤', '😠', '💨', '⚡'];
+    particle.innerHTML = angrySymbols[Math.floor(Math.random() * angrySymbols.length)];
+    
+    document.body.appendChild(particle);
+    
+    setTimeout(() => {
+      if (particle.parentNode) {
+        particle.parentNode.removeChild(particle);
+      }
+    }, 2000);
+  }
+};
+
+// Create sparkle effects for good moves
+export const createSparkleEffect = (x, y, count = 6) => {
+  for (let i = 0; i < count; i++) {
+    const particle = document.createElement('div');
+    particle.className = 'sparkle-particle';
+    
+    const randomX = Math.random() * 80 - 40;
+    const randomY = Math.random() * 60 + 30;
+    
+    particle.style.left = `${x + Math.random() * 25 - 12}px`;
+    particle.style.top = `${y + Math.random() * 25 - 12}px`;
+    particle.style.setProperty('--random-x', `${randomX}px`);
+    particle.style.setProperty('--random-y', `-${randomY}px`);
+    
+    // Different sparkle symbols
+    const sparkles = ['✨', '⭐', '💫', '🌟', '💎'];
+    particle.innerHTML = sparkles[Math.floor(Math.random() * sparkles.length)];
+    
+    document.body.appendChild(particle);
+    
+    setTimeout(() => {
+      if (particle.parentNode) {
+        particle.parentNode.removeChild(particle);
+      }
+    }, 2500);
+  }
+};
+
+// Create caution effects for medium-risk moves  
+export const createCautionEffect = (x, y, count = 4) => {
+  for (let i = 0; i < count; i++) {
+    const particle = document.createElement('div');
+    particle.className = 'caution-particle';
+    
+    const randomX = Math.random() * 60 - 30;
+    const randomY = Math.random() * 50 + 25;
+    
+    particle.style.left = `${x + Math.random() * 20 - 10}px`;
+    particle.style.top = `${y + Math.random() * 20 - 10}px`;
+    particle.style.setProperty('--random-x', `${randomX}px`);
+    particle.style.setProperty('--random-y', `-${randomY}px`);
+    
+    // Caution symbols
+    const cautionSymbols = ['⚠️', '🔸', '🔶', '💛', '⚡'];
+    particle.innerHTML = cautionSymbols[Math.floor(Math.random() * cautionSymbols.length)];
+    
+    document.body.appendChild(particle);
+    
+    setTimeout(() => {
+      if (particle.parentNode) {
+        particle.parentNode.removeChild(particle);
+      }
+    }, 2000);
+  }
+};
+
+// Determine effect based on dice roll and zone rating
+export const createRiskBasedEffect = (diceRoll, zoneRating, x, y) => {
+  // Calculate risk percentage (lower roll = higher risk)
+  const riskPercentage = (diceRoll / zoneRating) * 100;
+  
+  if (diceRoll === 1) {
+    // Already handled by scratch logic
+    return;
+  } else if (diceRoll >= 2 && diceRoll <= 25) {
+    // High risk - show angry particles
+    createAngryParticles(x, y, 8);
+  } else if (riskPercentage <= 40) {
+    // Medium-high risk - caution effects
+    createCautionEffect(x, y, 4);
+    createFloatingHeart(x, y, 'small');
+  } else if (riskPercentage <= 70) {
+    // Medium risk - sparkles and medium heart
+    createSparkleEffect(x, y, 4);
+    createFloatingHeart(x, y, 'medium');
+  } else {
+    // Low risk - lots of sparkles and big heart
+    createSparkleEffect(x, y, 8);
+    createFloatingHeart(x, y, 'large');
+  }
 };
